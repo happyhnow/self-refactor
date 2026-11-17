@@ -1,0 +1,2888 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="briefing">
+  <title>避開死亡螺旋：識別與打破盲從惡性循環｜互動學習簡報</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces: warm stone-white paper */
+      --background: #faf9f5;
+      --surface-container-low: #ffffff;
+      --surface-container: #f1efe8;
+      --surface-container-high: #e6e2d6;
+
+      /* Ink */
+      --on-surface: #17181a;
+      --on-surface-variant: #56585c;
+
+      /* Rules */
+      --outline: #17181a;
+      --outline-variant: #dedad0;
+
+      /* Accents */
+      --primary: #17181a;
+      --on-primary: #faf9f5;
+      --primary-container: #f2b705;
+      --on-primary-container: #17181a;
+      --secondary: #1f4e5f;
+      --tertiary: #785008;
+      --tertiary-container: #f5e6c4;
+      --secondary-container: #e4eef2;
+      --error: #b42318;
+      --error-container: #fdecea;
+      --on-error: #ffffff;
+
+      /* Data series, in order of use */
+      --data-1: #1f4e5f;
+      --data-2: #d99000;
+      --data-3: #2b6e52;
+      --data-4: #b84a39;
+      --data-context: #c4bfb2;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', 'Source Serif 4', serif;
+      --font-body: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif;
+      --font-label: 'Geist Mono', 'Noto Sans TC', monospace;
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --rounded-full: 0.25rem;
+
+      /* Style effects */
+      --section-rule: 1.5px solid var(--outline);
+      --card-border: 1px solid var(--outline-variant);
+      --badge-radius: 2px;
+      --heading-tracking: -0.02em;
+      --label-tracking: 0.08em;
+
+      /* Shared semantic & focus tokens */
+      --positive: #2b6e52;
+      --positive-container: #e4f2eb;
+      --warning: #b86e00;
+      --focus: #1f4e5f;
+
+      /* Type scale (Narrative) */
+      --display-size: clamp(2.125rem, 1.4rem + 2.8vw, 3.35rem);
+      --headline-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.15rem);
+      --subhead-size: clamp(1.125rem, 1.02rem + 0.45vw, 1.375rem);
+      --body-size: clamp(1rem, 0.96rem + 0.2vw, 1.09375rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+    header { position: static !important; }
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    :focus-visible {
+      outline: 2.5px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xl);
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+      max-width: 1160px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: var(--font-headline);
+      color: var(--on-surface);
+      margin: 0;
+      font-weight: 700;
+    }
+    p { margin: 0; }
+
+    .prose-measure {
+      max-width: 65ch;
+    }
+
+    /* Briefing Dossier Treatments */
+    .dossier-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-bottom: var(--section-rule);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .dossier-bar-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .dossier-pill {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--badge-radius);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .dossier-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      letter-spacing: 0.02em;
+    }
+    .dossier-progress-pill {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--secondary);
+      background: var(--secondary-container);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--badge-radius);
+      font-weight: 600;
+    }
+
+    .title {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      letter-spacing: var(--heading-tracking);
+      line-height: 1.15;
+      color: var(--on-surface);
+    }
+    .section-title {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+    }
+    .standfirst {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: var(--subhead-size);
+      color: var(--secondary);
+      margin-top: var(--space-sm);
+      line-height: 1.5;
+      max-width: 60ch;
+    }
+
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .figure-card .value {
+      font-family: 'Source Serif 4', var(--font-headline);
+      font-weight: 700;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    .index-num {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: var(--label-size);
+      color: var(--secondary);
+      letter-spacing: 0.06em;
+    }
+    .aside-box {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+    }
+
+    /* Jump Navigation */
+    .dossier-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: var(--card-border);
+    }
+    .nav-anchor {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .nav-anchor:hover {
+      background: var(--surface-container);
+      border-color: var(--outline);
+    }
+    .nav-anchor .num {
+      font-family: var(--font-label);
+      color: var(--secondary);
+      font-size: 0.75rem;
+    }
+
+    /* KPI Hero Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .kpi-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .kpi-value {
+      font-family: 'Source Serif 4', var(--font-headline);
+      font-size: clamp(1.75rem, 1.3rem + 1.2vw, 2.25rem);
+      font-weight: 700;
+      font-variant-numeric: lining-nums tabular-nums;
+      color: var(--on-surface);
+      line-height: 1.1;
+    }
+    .kpi-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    .kpi-desc {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--secondary);
+    }
+    .btn-secondary {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border-color: var(--outline-variant);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--surface-container);
+      border-color: var(--outline);
+    }
+    .btn-gold {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .btn-gold:hover:not(:disabled) {
+      background: var(--surface-container-high);
+      border-color: var(--outline);
+    }
+    .btn-positive {
+      background: var(--positive);
+      color: var(--on-primary);
+    }
+    .btn-positive:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+
+    /* Tags & Chips */
+    .tag-warm {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--tertiary-container);
+      color: var(--tertiary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem var(--space-sm);
+      border-radius: var(--rounded);
+    }
+    .tag-slate {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--secondary-container);
+      color: var(--secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    /* Section Layouts */
+    .section-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .two-col-asymmetric {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+
+    /* Biology 3-Takeaway Cards */
+    .insight-item {
+      display: flex;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: var(--card-border);
+    }
+    .insight-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .insight-badge {
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      display: grid;
+      place-items: center;
+      background: var(--surface-container);
+      color: var(--secondary);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: var(--rounded);
+    }
+
+    /* Arena 4-Acts Cards */
+    .arena-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .arena-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      container-type: inline-size;
+    }
+    .arena-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--card-border);
+    }
+    .arena-title {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+    .arena-detail-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .arena-detail-list li {
+      position: relative;
+      padding-left: var(--space-md);
+      font-size: 0.9375rem;
+      color: var(--on-surface);
+      line-height: 1.6;
+    }
+    .arena-detail-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62rem;
+      width: 6px;
+      height: 6px;
+      background: var(--secondary);
+      border-radius: 1px;
+    }
+
+    /* Interactive Buffett & Redline Accordions */
+    .accordion-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .acc-btn {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .acc-btn:hover {
+      background: var(--surface-container);
+    }
+    .acc-btn[aria-expanded="true"] {
+      background: var(--secondary-container);
+      border-color: var(--secondary);
+      color: var(--secondary);
+    }
+    .acc-panel {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      font-size: 0.88rem;
+      color: var(--on-surface);
+      line-height: 1.6;
+    }
+    .acc-panel.open {
+      display: block;
+    }
+
+    /* Infographic Container */
+    .infographic-shell {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .infographic-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: var(--card-border);
+    }
+    .mode-switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .mode-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: var(--card-border);
+      background: var(--background);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .mode-btn:hover {
+      background: var(--surface-container);
+    }
+    .mode-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .infographic-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+    .svg-canvas-wrap {
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 420px;
+    }
+    .infographic-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .svg-node {
+      cursor: pointer;
+      transition: opacity var(--dur-short) var(--ease-out);
+    }
+    .svg-node:hover rect,
+    .svg-node:hover circle {
+      stroke-width: 2.5;
+    }
+    .svg-text-main {
+      font-family: var(--font-body);
+      fill: var(--on-surface);
+      font-weight: 700;
+    }
+    .svg-text-sub {
+      font-family: var(--font-body);
+      fill: var(--on-surface-variant);
+      font-weight: 500;
+    }
+    .svg-text-mono {
+      font-family: var(--font-label);
+      fill: var(--secondary);
+      font-weight: 600;
+    }
+
+    .inspector-panel {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .inspector-stat-bar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .bar-track {
+      width: 100%;
+      height: 10px;
+      background: var(--surface-container-high);
+      border-radius: var(--badge-radius);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--badge-radius);
+      transition: width var(--dur-long) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+
+    /* Spiral Simulator Bar */
+    .simulator-strip {
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-lg);
+      align-items: end;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .control-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      display: flex;
+      justify-content: space-between;
+    }
+    .control-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--secondary);
+      min-height: 36px;
+      cursor: pointer;
+    }
+    .sim-readout {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* 4 Tools & Checklist */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .tool-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .checklist-panel {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      background: var(--background);
+      cursor: pointer;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .check-row:hover {
+      background: var(--surface-container);
+    }
+    .check-row input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--positive);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .check-row.checked {
+      background: var(--positive-container);
+      border-color: var(--positive);
+    }
+
+    /* Flashcards Section */
+    .flashcard-shell {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .filter-chip {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: var(--card-border);
+      background: var(--background);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .filter-chip:hover {
+      background: var(--surface-container);
+    }
+    .filter-chip.active {
+      background: var(--secondary);
+      color: var(--on-primary);
+      border-color: var(--secondary);
+    }
+
+    .card-stage {
+      perspective: 1200px;
+      min-height: 290px;
+    }
+    .flashcard {
+      position: relative;
+      width: 100%;
+      min-height: 290px;
+      transform-style: preserve-3d;
+      transition: transform var(--dur-long) var(--ease-out);
+      cursor: pointer;
+    }
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: var(--card-border);
+    }
+    .card-front {
+      background: var(--background);
+    }
+    .card-back {
+      background: var(--surface-container);
+      border-top: 3px solid var(--secondary);
+      transform: rotateY(180deg);
+    }
+    .card-meta-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .card-center-text {
+      font-family: var(--font-headline);
+      font-size: clamp(1.25rem, 1rem + 0.9vw, 1.625rem);
+      line-height: 1.45;
+      color: var(--on-surface);
+      margin: var(--space-md) 0;
+    }
+    .card-answer-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--on-surface);
+      margin: var(--space-sm) 0;
+    }
+    .card-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: var(--card-border);
+    }
+    .control-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    /* Quiz Section */
+    .quiz-shell {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .quiz-stepper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .step-dot {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: var(--rounded);
+      border: var(--card-border);
+      background: var(--background);
+      color: var(--on-surface-variant);
+      font-family: var(--font-label);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-dot.current {
+      border-color: var(--outline);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .step-dot.correct {
+      background: var(--positive-container);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+    .step-dot.wrong {
+      background: var(--error-container);
+      border-color: var(--error);
+      color: var(--error);
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .quiz-option {
+      min-height: 48px;
+      padding: var(--space-md);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--on-surface);
+      text-align: left;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .quiz-option:hover:not(:disabled) {
+      background: var(--surface-container);
+      border-color: var(--outline);
+    }
+    .quiz-option.selected-correct {
+      background: var(--positive-container);
+      border-color: var(--positive);
+      color: var(--on-surface);
+    }
+    .quiz-option.selected-wrong {
+      background: var(--error-container);
+      border-color: var(--error);
+      color: var(--on-surface);
+    }
+    .opt-key {
+      font-family: var(--font-label);
+      font-weight: 600;
+      color: var(--secondary);
+      flex-shrink: 0;
+    }
+    .quiz-feedback {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border-left: 4px solid var(--secondary);
+      background: var(--surface-container);
+      display: none;
+    }
+    .quiz-feedback.visible {
+      display: block;
+    }
+    .quiz-feedback.is-correct {
+      border-left-color: var(--positive);
+      background: var(--positive-container);
+    }
+    .quiz-feedback.is-wrong {
+      border-left-color: var(--error);
+      background: var(--error-container);
+    }
+
+    /* Extension & Community Section */
+    .extension-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .timeline-mini {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      border-left: 2px solid var(--outline-variant);
+      padding-left: var(--space-md);
+      margin: var(--space-sm) 0;
+    }
+    .timeline-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .prompt-template {
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--on-surface);
+    }
+    .inline-status {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--positive);
+      min-height: 1.25rem;
+    }
+
+    /* Table */
+    .briefing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .briefing-table th {
+      text-align: left;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      border-bottom: var(--section-rule);
+      padding: var(--space-sm);
+    }
+    .briefing-table td {
+      padding: var(--space-sm);
+      border-bottom: var(--card-border);
+      vertical-align: top;
+    }
+
+    /* Footer */
+    .dossier-footer {
+      border-top: var(--section-rule);
+      padding-top: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 860px) {
+      .two-col-asymmetric,
+      .infographic-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-xl);
+      }
+      .figure-card,
+      .infographic-shell,
+      .flashcard-shell,
+      .quiz-shell {
+        padding: var(--space-md);
+      }
+      .card-face {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+
+    <!-- HERO / MASTHEAD -->
+    <header class="section-block">
+      <div>
+        <div class="dossier-bar">
+          <div class="dossier-bar-left">
+            <span class="dossier-pill">SYSTEM DOSSIER · MD50</span>
+            <span class="dossier-meta">健康・財富・關係三劍客｜系統性盲從現象深度解析</span>
+          </div>
+          <span class="dossier-progress-pill" id="global-progress-pill">記憶卡 0/12 · 評量 0/8</span>
+        </div>
+
+        <h1 class="title">避開死亡螺旋：如何識別並打破「盲從惡性循環」</h1>
+        <p class="standfirst">
+          走進死亡圓圈的螞蟻，沒有一隻做錯事。當正回饋機制取代了事實檢驗，看似聰明的常規就會把健康、財務與關係推向集體崩潰。
+        </p>
+
+        <nav class="dossier-nav" aria-label="章節快速導覽">
+          <a class="nav-anchor" href="#sec-concepts"><span class="num">01</span>核心概念與四大場域</a>
+          <a class="nav-anchor" href="#sec-infographic"><span class="num">02</span>系統機制資訊圖表</a>
+          <a class="nav-anchor" href="#sec-tools"><span class="num">03</span>四大破局工具與熔斷</a>
+          <a class="nav-anchor" href="#sec-flashcards"><span class="num">04</span>記憶卡片複習</a>
+          <a class="nav-anchor" href="#sec-quiz"><span class="num">05</span>情境測驗評量</a>
+          <a class="nav-anchor" href="#sec-community"><span class="num">06</span>影音導讀與社團共學</a>
+        </nav>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="index-num">BIOLOGICAL PROTOTYPE · 1921</span>
+          <div class="kpi-value">365 m</div>
+          <div class="kpi-label">蓋亞納軍蟻死亡圓圈周長</div>
+          <p class="kpi-desc">博物學家威廉·畢比記錄：最外圈走一圈需 2.5 小時，持續繞行約兩天，直到力氣耗盡集體倒下。</p>
+        </div>
+        <div class="kpi-card">
+          <span class="index-num">CORE MECHANISM</span>
+          <div class="kpi-value">正回饋鎖死</div>
+          <div class="kpi-label">錯誤因「被重複走過」而更可信</div>
+          <p class="kpi-desc">每繞一圈，費洛蒙（價格、恐懼留言或信念）便加濃一層，讓人把群體氣味誤認為客觀現實。</p>
+        </div>
+        <div class="kpi-card">
+          <span class="index-num">ESCAPE PROTOCOL</span>
+          <div class="kpi-value">4 大破局工具</div>
+          <div class="kpi-label">從「浮空一公尺」到「熔斷協議」</div>
+          <p class="kpi-desc">人與螞蟻最大的差別，在於我們擁有「停下來抬起頭，檢驗這條路是事實還是氣味鋪成」的能力。</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 01: CORE CONCEPTS & 4 ARENAS -->
+    <section id="sec-concepts" class="section-block">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">01 · CORE CONCEPTS</span>
+          <span class="dossier-meta">本質定義與四大現實場域拆解</span>
+        </div>
+      </div>
+
+      <div class="two-col-asymmetric">
+        <div class="section-block">
+          <div>
+            <h2 class="section-title">死亡螺旋不是意外，而是「沒有煞車的常規」</h2>
+            <p class="prose-measure" style="margin-top: var(--space-sm);">
+              生物學家將這現象稱為「螞蟻魔方（Circular Mill）」，經濟學與心理系統則稱之為「死亡螺旋」。南美洲行軍蟻的公蟻在演化的落葉層環境中眼睛幾乎失明，完全仰賴觸角上的化學感受器（分辨微量費洛蒙）與腳上的振動感受器行軍。只要遵守一條平常極為聰明的規則——<strong>「跟著前面同伴留下的氣味走，並留下自己的氣味」</strong>——數十萬隻螞蟻便能如軍隊般高效狩獵。
+            </p>
+            <p class="prose-measure" style="margin-top: var(--space-sm);">
+              危機出在「環境突變」與「缺少地標」：當大雨沖散氣味路徑、小群失散，只要隊伍前端恰好接上自己的尾巴，一個封閉的圓就誕生了。1944 年動物學家施奈爾拉（T.C. Schneirla）在實驗室成功重現此現象：平坦無障礙的環境反而最容易形成完美的死亡圓圈。
+            </p>
+          </div>
+
+          <div class="aside-box">
+            <span class="tag-warm">賽斯資料視角：信念即氣味</span>
+            <p style="margin-top: var(--space-xs); font-size: 0.9375rem;">
+              「我們以為自己在看著現實，其實常常只是在聞——聞著自己與別人留下的信念氣味，然後一圈又一圈地走。」多數人並非死於懶惰或愚笨，而是死於一個從未被檢驗的前提。
+            </p>
+          </div>
+        </div>
+
+        <div class="figure-card">
+          <span class="index-num">THREE FATAL DETAILS · 三個反直覺洞見</span>
+          <h3 style="margin-top: var(--space-xs); font-size: 1.2rem;">為何聰明規則會帶來毀滅？</h3>
+          <div style="margin-top: var(--space-sm);">
+            <div class="insight-item">
+              <div class="insight-badge">01</div>
+              <div>
+                <strong>不靠眼睛，只靠同伴的氣味導航</strong>
+                <p style="font-size: 0.88rem; color: var(--on-surface-variant); margin-top: 2px;">缺乏獨立視覺地標時，個體只能將群體訊號（股價、留言、同溫層焦慮）當成唯一指南針。</p>
+              </div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-badge">02</div>
+              <div>
+                <strong>錯誤路線會因被走過而變得更可信</strong>
+                <p style="font-size: 0.88rem; color: var(--on-surface-variant); margin-top: 2px;">正回饋讓「多人重複」偽裝成「真理共識」，氣味越濃，回頭質疑的心理門檻就越高。</p>
+              </div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-badge">03</div>
+              <div>
+                <strong>救命的往往是那隻「走神歪掉」的螞蟻</strong>
+                <p style="font-size: 0.88rem; color: var(--on-surface-variant); margin-top: 2px;">真正致死的原因不是飢餓，而是未經檢驗的前提：「前面的人一定知道路」。偶然脫隊的新軌跡才是生路。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOUR ARENAS -->
+      <div style="margin-top: var(--space-md);">
+        <h3 style="font-size: 1.35rem; margin-bottom: var(--space-md);">死亡螺旋出現在哪四個地方？</h3>
+        <div class="arena-grid">
+
+          <!-- Arena 1 -->
+          <article class="arena-card">
+            <div class="arena-header">
+              <div>
+                <span class="index-num">ACT 01 · BIOLOGICAL ORIGIN</span>
+                <h4 class="arena-title">生物原型：南美洲軍蟻的費洛蒙圓圈</h4>
+              </div>
+              <span class="tag-slate">自然機制</span>
+            </div>
+            <ul class="arena-detail-list">
+              <li><strong>失明與過度依賴：</strong>捨棄視覺神經資源，換取極致化學與振動感測，在平坦無障礙地面失去外部校準。</li>
+              <li><strong>歷史實證數據：</strong>1921 年蓋亞納紀錄周長 365 公尺圓圈，外圈繞行一圈 2.5 小時，歷時約兩天至集體力竭。</li>
+              <li><strong>自然脫困條件：</strong>地形起伏多障礙的野外難成完美圓圈；唯有少數「走神蟻」偏離舊軌，才能拉出整群隊伍。</li>
+            </ul>
+          </article>
+
+          <!-- Arena 2 -->
+          <article class="arena-card">
+            <div class="arena-header">
+              <div>
+                <span class="index-num">ACT 02 · FINANCIAL MARKETS</span>
+                <h4 class="arena-title">金融市場：華爾街與台股的價格費洛蒙</h4>
+              </div>
+              <span class="tag-warm">財富健康</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+              11 月 3 日美國期中選舉後，美股先大漲又暴跌（市值蒸發逾兩兆美元），台股於 11 月 6 日因高度連動 AI 供應鏈而創史上盤中最大跌點、台積電創最大跌點。追漲殺跌與「關鍵人物信任裂縫」都是價格費洛蒙的正回饋。點擊展開「巴菲特四問」檢驗指標：
+            </p>
+            <div class="accordion-group">
+              <button class="acc-btn" type="button" aria-expanded="false" onclick="toggleAccordion(this)">
+                <span>問 01｜這條路是事實鋪的，還是金融包裝鋪的？</span>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="acc-panel">
+                從 2000 年網路泡沫、2008 年次級房貸到 SPV（特殊目的實體）、表外融資、結構化分層與供應商融資，名稱不斷更換，功能卻是將風險藏起來。巴菲特早在 2002 年致股東信稱複雜衍生性商品為「金融大規模毀滅性武器」——需要多層結構才能解釋為何賺錢，本身就是警訊。
+              </div>
+
+              <button class="acc-btn" type="button" aria-expanded="false" onclick="toggleAccordion(this)">
+                <span>問 02｜它是在產生現金，還是在吞噬現金？</span>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="acc-panel">
+                真正的護城河只需少許追加資本就能持續帶回現金。若產業年年投入天文數字資本支出並背負長期剛性合約（營收可一夜縮水，剛性支出卻一毛不能少），連「淘金熱賣鏟子的人」也可能被賒帳拖下水。重點在現金流，而非故事敘事。
+              </div>
+
+              <button class="acc-btn" type="button" aria-expanded="false" onclick="toggleAccordion(this)">
+                <span>問 03｜誰賺走收益，誰承擔風險？（含信任迴圈案例）</span>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="acc-panel">
+                管理層報酬綁短期股價、無投票權股鎖死控制權，會形成「收益歸個人、風險歸大眾」。此外「信任」也是螺旋資產：當關鍵人物出現裂縫（如 11 月初輝達執行長黃仁勳婚外情調查事件），會啟動「可信度迴圈、監管迴圈（11/18 國會閉門簡報）與關鍵人物風險」；唯有公開認錯與董事會獨立調查能構成熔斷，提醒投資人既要防盲目相信，也要防盲目懷疑，持續回到原始一手來源。
+              </div>
+
+              <button class="acc-btn" type="button" aria-expanded="false" onclick="toggleAccordion(this)">
+                <span>問 04｜潮水退去時，誰在裸泳？</span>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="acc-panel">
+                「股市是皮肉，債市是筋骨」——股價是流動性共識，債務卻是剛性的到期契約。波克夏長握大量現金與短期國債，不依賴明日資本市場的慈悲。查理·蒙格指出「推動世界的不是貪婪，是嫉妒」；看清市場動作是否屬於螺旋，關鍵不在買或賣的動作本身，而是<strong>「決定做在冷靜寫好的規則裡，還是價格跳動的當下」</strong>。
+              </div>
+            </div>
+          </article>
+
+          <!-- Arena 3 -->
+          <article class="arena-card">
+            <div class="arena-header">
+              <div>
+                <span class="index-num">ACT 03 · MEDICAL ECHO CHAMBER</span>
+                <h4 class="arena-title">醫療健康：社群社團裡的費洛蒙死衚衕</h4>
+              </div>
+              <span class="tag-slate">身體健康</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+              真實案例：母親腰椎 L4–L5 長了 3 根骨刺、合併椎間盤突出與脊椎滑脫（手術若無補助自費近 70 萬元），決定暫不開刀、透過運動與身體和平共處。然而臉書社團卻出現一面倒「千萬別開刀」的留言，背後由三股力量驅動：
+            </p>
+            <ul class="arena-detail-list">
+              <li><strong>力量 ① 康復者沉默，受苦者發聲：</strong>術後順利重返職場球場的人不會天天發文報平安，留下的是遭遇沾黏或術後痛的家屬（反向倖存者偏差）。</li>
+              <li><strong>力量 ② 恐懼相互加濃：</strong>第一則「我後悔了」成為強烈費洛蒙，吸引同樣焦慮者聚集，使醫學統計難以穿透。</li>
+              <li><strong>力量 ③ 個體差異被抹平：</strong>顯微減壓、內視鏡微創、融合固定與人工椎間盤各有適應症；而「接二連三開刀」的<strong>鄰近節病變</strong>，根源多在固定後相鄰節承重增加加上未訓練核心或持續搬重物，屬於力學與術後保養問題。</li>
+            </ul>
+            <div class="accordion-group">
+              <button class="acc-btn" type="button" aria-expanded="false" onclick="toggleAccordion(this)">
+                <span>查看「帶著眼睛走路」的三大神經紅線（熔斷界線）</span>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="acc-panel">
+                不開刀不等於盲目拒絕醫療，而是依據客觀紅線回診：<br>
+                <strong>紅線 1：</strong>腿部無力狀況越來越明顯（如走路拖腳、腳踝抬不起來）。<br>
+                <strong>紅線 2：</strong>大小便失禁或解不出來，或胯下會陰部麻木（屬於急診狀況，不可等待）。<br>
+                <strong>紅線 3：</strong>疼痛或麻木範圍持續擴大，且規律運動與休息數週後依然明顯惡化。
+              </div>
+            </div>
+          </article>
+
+          <!-- Arena 4 -->
+          <article class="arena-card">
+            <div class="arena-header">
+              <div>
+                <span class="index-num">ACT 04 · INNER & RELATIONAL LOOPS</span>
+                <h4 class="arena-title">心理與關係：最隱而未顯的自造死亡螺旋</h4>
+              </div>
+              <span class="tag-warm">關係與心理</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+              最危險的費洛蒙是自己留下的：信念是一張濾網，加上恐懼與反覆想像，就會把自創的路徑誤認為命運。常見三種內在螺旋與一種關係螺旋：
+            </p>
+            <ul class="arena-detail-list">
+              <li><strong>焦慮自我強化：</strong>微恙搜尋重症 → 越焦慮越放大身體訊號 → 反覆搜尋。<em>破局：不要在同一思維層次找解藥，繞三圈以上就去散步、曬太陽、洗熱水澡。</em></li>
+              <li><strong>偽安慰習慣：</strong>高壓後熬夜滑手機、高油糖犒賞 → 隔天低效內疚 → 晚上更需刺激，長期透支未來。</li>
+              <li><strong>把別人的焦慮當方向：</strong>朋友買房、同事轉熱門產業時，問自己「這是我要的，還是聞到別人的焦慮氣味？」</li>
+            </ul>
+            <div class="accordion-group">
+              <button class="acc-btn" type="button" aria-expanded="false" onclick="toggleAccordion(this)">
+                <span>檢視蘇珊·弗沃德「情緒勒索 FOG 螺旋」四訊號與破局</span>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </button>
+              <div class="acc-panel">
+                情緒勒索的三種燃料是<strong>恐懼（Fear）、義務（Obligation）、罪惡感（Guilt）</strong>。每次你因內疚讓步換取短暫平靜，對方就學到「施壓有效」，你則學到「退讓才能和平」。<br>
+                <strong>四個警訊：</strong>① 說不前先排練很久甚至放棄；② 讓步後是委屈疲憊而非平靜；③ 對方要求越多，你的時間金錢朋友越少；④ 開始相信「是我太不懂事」。<br>
+                <strong>破局練習：</strong>從低風險小界線開始（「這件事我需要想一天再回覆」），對方反彈正證明舊迴圈被打破；預寫關係熔斷條款，找朋友或諮商師作「走神蟻」。賽斯提醒：<strong>「當下是力量之點」</strong>，路徑不是命運。
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: INTERACTIVE INFOGRAPHIC -->
+    <section id="sec-infographic" class="section-block">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">02 · SYSTEMIC INFOGRAPHIC</span>
+          <span class="dossier-meta">互動資訊圖表｜系統運作機制與破局介入點</span>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-title">死亡螺旋機制圖譜：從「封閉圓圈」轉向「擴展螺旋」</h2>
+        <p class="standfirst" style="font-size: 1rem;">
+          切換下方三種系統視圖並點擊圖中節點，觀察正回饋如何鎖死系統，以及四大工具如何在關鍵節點切斷費洛蒙慣性。
+        </p>
+      </div>
+
+      <div class="infographic-shell">
+        <div class="infographic-controls">
+          <div class="mode-switch" role="group" aria-label="資訊圖表視圖切換">
+            <button class="mode-btn active" id="btn-mode-closed" type="button" onclick="setInfographicMode('closed')">狀態 A：封閉正回饋（死亡螺旋）</button>
+            <button class="mode-btn" id="btn-mode-matrix" type="button" onclick="setInfographicMode('matrix')">狀態 B：四大場域結構對照</button>
+            <button class="mode-btn" id="btn-mode-break" type="button" onclick="setInfographicMode('break')">狀態 C：四大工具介入破局</button>
+          </div>
+          <span class="dossier-meta">點擊圖中任一節點檢視診斷細節</span>
+        </div>
+
+        <div class="infographic-stage">
+          <div class="svg-canvas-wrap">
+            <svg id="system-svg" class="infographic-svg" viewBox="0 0 640 430" role="img" aria-label="死亡螺旋系統機制與破局工具互動圖表">
+              <!-- Rendered dynamically by JS using CSS variable tokens -->
+            </svg>
+          </div>
+
+          <aside class="inspector-panel" id="infographic-inspector" aria-live="polite">
+            <!-- Populated by JS -->
+          </aside>
+        </div>
+
+        <!-- Interactive Trajectory Simulator -->
+        <div class="simulator-strip">
+          <div class="control-group">
+            <label for="slider-scent">
+              <span>群體費洛蒙 / 情緒從眾強度</span>
+              <span id="val-scent" style="font-family: var(--font-label); color: var(--data-4);">75%</span>
+            </label>
+            <input type="range" id="slider-scent" min="10" max="100" value="75" oninput="updateSpiralSimulator()">
+          </div>
+
+          <div class="control-group">
+            <label for="slider-breaker">
+              <span>熔斷紀律與走神蟻介入度</span>
+              <span id="val-breaker" style="font-family: var(--font-label); color: var(--data-3);">30%</span>
+            </label>
+            <input type="range" id="slider-breaker" min="0" max="100" value="30" oninput="updateSpiralSimulator()">
+          </div>
+
+          <div class="sim-readout" id="sim-readout">
+            <span class="index-num">TRAJECTORY DIAGNOSIS</span>
+            <strong id="sim-status" style="color: var(--error); font-size: 1.05rem;">高風險：正在加速收縮的封閉圓圈</strong>
+            <span id="sim-advice" style="font-size: 0.84rem; color: var(--on-surface-variant);">情緒氣味高於客觀熔斷力，建議立即啟動「浮空一公尺」抽離現場。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: FOUR TOOLS & CHECKLIST -->
+    <section id="sec-tools" class="section-block">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">03 · BREAKING PROTOCOL</span>
+          <span class="dossier-meta">四大實戰破局工具與個人熔斷條款沙盤</span>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-title">四個工具做同一件事：把注意力從氣味拉回此刻的事實</h2>
+        <p class="prose-measure" style="margin-top: var(--space-xs); color: var(--on-surface-variant);">
+          當你發現身邊所有人都往同一個方向衝，或在同一個念頭裡繞了三圈以上，請依序啟動這四個破局工具。
+        </p>
+      </div>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <span class="index-num">TOOL 01 · METACOGNITION</span>
+          <h3 style="font-size: 1.2rem;">浮空一公尺</h3>
+          <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+            螞蟻視野只有前方幾毫米；若能浮空一公尺俯瞰，一秒就能看穿封閉的圓。這就是「後設認知」——觀察自己思考的能力。
+          </p>
+          <div class="aside-box" style="margin-top: auto; padding: var(--space-sm) var(--space-md);">
+            <strong style="font-size: 0.85rem;">每日實踐：</strong>
+            <span style="font-size: 0.85rem;">留 5–10 分鐘靜坐、寫日記或專注呼吸散步，問：「我這週是在擴展的螺旋上，還是在封閉圓圈裡？」</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <span class="index-num">TOOL 02 · CONTROLLED DEVIATION</span>
+          <h3 style="font-size: 1.2rem;">允許一隻走神蟻</h3>
+          <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+            完美有序卻僵化的系統最容易集體暴斃。救命的往往是那隻走偏的螞蟻——刻意引入異質視角與安全變數。
+          </p>
+          <div class="aside-box" style="margin-top: auto; padding: var(--space-sm) var(--space-md);">
+            <strong style="font-size: 0.85rem;">每日實踐：</strong>
+            <span style="font-size: 0.85rem;">讀不同觀點的書、認識生活圈外朋友、走沒走過的路回家；投資時去查眾人忽略的現金流與債務。</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <span class="index-num">TOOL 03 · CIRCUIT BREAKER</span>
+          <h3 style="font-size: 1.2rem;">預先寫好熔斷協議</h3>
+          <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+            在頭腦清醒時，為健康、財務與關係寫下「不可逾越的紅色按鈕」，才不會在狂熱或恐懼當下被迫決定。
+          </p>
+          <div class="aside-box" style="margin-top: auto; padding: var(--space-sm) var(--space-md);">
+            <strong style="font-size: 0.85rem;">三領域紅線範例：</strong>
+            <span style="font-size: 0.85rem;">連續失眠逾兩週即排開工作檢查；投資虧損達預設比例不凹單攤平；一段關係哭多於笑即退回界線。</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <span class="index-num">TOOL 04 · INAMORI PHILOSOPHY</span>
+          <h3 style="font-size: 1.2rem;">樂觀思考・悲觀計畫・積極執行</h3>
+          <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+            稻盛和夫經營哲學：構思寫下最好未來；計畫預想最壞狀況並備好對策；執行時帶著信心全力以赴。
+          </p>
+          <div class="aside-box" style="margin-top: auto; padding: var(--space-sm) var(--space-md);">
+            <strong style="font-size: 0.85rem;">實戰應用：</strong>
+            <span style="font-size: 0.85rem;">樂觀相信鍛鍊腹橫肌、多裂肌與臀肌能為腰椎穿上「肌肉護腰」，同時悲觀設好神經紅線並每日追蹤紀錄。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Personal Circuit Breaker Checklist -->
+      <div class="checklist-panel">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+          <div>
+            <span class="index-num">THREE MUSKETEERS · 個人熔斷檢核沙盤</span>
+            <h3 style="font-size: 1.15rem; margin-top: 2px;">勾選你已為自己建立的「清醒時刻底線」（進度自動儲存）</h3>
+          </div>
+          <span class="tag-slate" id="checklist-counter">已建立 0 / 6 項熔斷機制</span>
+        </div>
+
+        <div class="card-grid" style="gap: var(--space-sm);">
+          <label class="check-row" for="chk-1">
+            <input type="checkbox" id="chk-1" onchange="toggleChecklistItem('chk-1')">
+            <div>
+              <strong>健康｜身體警訊熔斷</strong>
+              <p style="font-size: 0.85rem; color: var(--on-surface-variant);">若連續失眠逾兩週、或出現神經壓迫紅線症狀，立即暫停繁重工作並就醫檢查。</p>
+            </div>
+          </label>
+          <label class="check-row" for="chk-2">
+            <input type="checkbox" id="chk-2" onchange="toggleChecklistItem('chk-2')">
+            <div>
+              <strong>健康｜中斷反覆焦慮搜尋</strong>
+              <p style="font-size: 0.85rem; color: var(--on-surface-variant);">同一煩惱在腦中繞過三圈以上，立即放下手機去散步、曬太陽或洗熱水澡。</p>
+            </div>
+          </label>
+          <label class="check-row" for="chk-3">
+            <input type="checkbox" id="chk-3" onchange="toggleChecklistItem('chk-3')">
+            <div>
+              <strong>財務｜事前寫下停損與進場規則</strong>
+              <p style="font-size: 0.85rem; color: var(--on-surface-variant);">所有買賣依據冷靜時寫下的價格與現金流條件，不在盤中價格劇烈跳動時臨時加碼攤平。</p>
+            </div>
+          </label>
+          <label class="check-row" for="chk-4">
+            <input type="checkbox" id="chk-4" onchange="toggleChecklistItem('chk-4')">
+            <div>
+              <strong>財務｜穿透敘事查核財報地標</strong>
+              <p style="font-size: 0.85rem; color: var(--on-surface-variant);">投資前必看巴菲特四問：是否為金融包裝、現金流正負、剛性債務與關鍵人物風險。</p>
+            </div>
+          </label>
+          <label class="check-row" for="chk-5">
+            <input type="checkbox" id="chk-5" onchange="toggleChecklistItem('chk-5')">
+            <div>
+              <strong>關係｜不當場答應的冷卻條款</strong>
+              <p style="font-size: 0.85rem; color: var(--on-surface-variant);">面對違背原則或伴隨內疚壓力的請求，一律回覆「這件事我需要想一天再回覆」。</p>
+            </div>
+          </label>
+          <label class="check-row" for="chk-6">
+            <input type="checkbox" id="chk-6" onchange="toggleChecklistItem('chk-6')">
+            <div>
+              <strong>生活｜每週保留浮空一公尺儀式</strong>
+              <p style="font-size: 0.85rem; color: var(--on-surface-variant);">固定寫日記檢視：目前拼命追求的目標，是自己真正想要，還是別人的焦慮氣味？</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: FLASHCARDS -->
+    <section id="sec-flashcards" class="section-block">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">04 · MEMORY FLASHCARDS</span>
+          <span class="dossier-meta">互動記憶卡片｜核心術語與反直覺洞察複習</span>
+        </div>
+        <span class="dossier-meta" id="fc-mastery-stat">已掌握 0 / 12 張</span>
+      </div>
+
+      <div>
+        <h2 class="section-title">記憶卡片：強化「辨識費洛蒙」的腦內索引</h2>
+        <p class="standfirst" style="font-size: 1rem;">
+          點擊卡片或按下「翻轉卡片」檢視核心解答與行動對策；按領域篩選並標記你的熟練度。
+        </p>
+      </div>
+
+      <div class="flashcard-shell">
+        <div class="filter-row">
+          <div class="chip-group" role="group" aria-label="記憶卡片分類篩選">
+            <button class="filter-chip active" type="button" onclick="filterFlashcards('all', this)">全部 (12)</button>
+            <button class="filter-chip" type="button" onclick="filterFlashcards('mechanism', this)">生物與機制</button>
+            <button class="filter-chip" type="button" onclick="filterFlashcards('finance', this)">金融市場</button>
+            <button class="filter-chip" type="button" onclick="filterFlashcards('health', this)">醫療社群</button>
+            <button class="filter-chip" type="button" onclick="filterFlashcards('mind', this)">心理與破局</button>
+          </div>
+          <button class="btn btn-secondary" type="button" onclick="shuffleFlashcards()">
+            <i data-lucide="shuffle" aria-hidden="true" style="width:16px;height:16px;"></i>
+            <span>隨機洗牌</span>
+          </button>
+        </div>
+
+        <div class="card-stage">
+          <div class="flashcard" id="flashcard-el" tabindex="0" role="button" aria-pressed="false" aria-label="翻轉記憶卡片" onclick="flipFlashcard()" onkeydown="handleCardKey(event)">
+            <div class="card-face card-front">
+              <div class="card-meta-top">
+                <span class="tag-slate" id="fc-category-tag">生物與機制</span>
+                <span class="index-num" id="fc-index-label">CARD 01 / 12</span>
+              </div>
+              <div class="card-center-text" id="fc-question">載入中…</div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="dossier-meta">點擊卡片翻看核心解析</span>
+                <span class="tag-warm" id="fc-status-badge">待複習</span>
+              </div>
+            </div>
+            <div class="card-face card-back">
+              <div class="card-meta-top">
+                <span class="tag-warm">核心解析與對策</span>
+                <span class="index-num" id="fc-back-index">CARD 01 / 12</span>
+              </div>
+              <div class="card-answer-text" id="fc-answer">載入中…</div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="dossier-meta" id="fc-source-note">來源：MD50 核心摘要</span>
+                <span class="dossier-meta">再次點擊可翻回正面</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-controls">
+          <div class="control-cluster">
+            <button class="btn btn-secondary" type="button" id="fc-prev-btn" onclick="prevFlashcard()">
+              <i data-lucide="arrow-left" aria-hidden="true" style="width:16px;height:16px;"></i>
+              <span>上一張</span>
+            </button>
+            <button class="btn btn-primary" type="button" onclick="flipFlashcard()">
+              <i data-lucide="rotate-cw" aria-hidden="true" style="width:16px;height:16px;"></i>
+              <span>翻轉卡片</span>
+            </button>
+            <button class="btn btn-secondary" type="button" id="fc-next-btn" onclick="nextFlashcard()">
+              <span>下一張</span>
+              <i data-lucide="arrow-right" aria-hidden="true" style="width:16px;height:16px;"></i>
+            </button>
+          </div>
+          <div class="control-cluster">
+            <button class="btn btn-secondary" type="button" onclick="markCardMastery(false)">需再複習</button>
+            <button class="btn btn-positive" type="button" onclick="markCardMastery(true)">
+              <i data-lucide="check" aria-hidden="true" style="width:16px;height:16px;"></i>
+              <span>標記為已掌握</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05: ASSESSMENT QUIZ -->
+    <section id="sec-quiz" class="section-block">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">05 · ASSESSMENT QUIZ</span>
+          <span class="dossier-meta">情境判斷與觀念評量｜檢驗你的「抬頭」敏銳度</span>
+        </div>
+        <span class="dossier-meta" id="quiz-score-badge">目前得分：0 / 8</span>
+      </div>
+
+      <div>
+        <h2 class="section-title">實戰測驗評量：你能在繞圈的當下認出它嗎？</h2>
+        <p class="standfirst" style="font-size: 1rem;">
+          共 8 題橫跨生物原型、金融投資、醫療抉擇與心理關係的情境題。作答後將立即顯示深度解析。
+        </p>
+      </div>
+
+      <div class="quiz-shell">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);">
+          <div class="quiz-stepper" id="quiz-stepper" role="navigation" aria-label="測驗題號導覽"></div>
+          <button class="btn btn-secondary" type="button" id="quiz-reset-btn" onclick="resetQuiz(this)">重新作答全部題目</button>
+        </div>
+
+        <div id="quiz-stage" style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+            <span class="tag-slate" id="quiz-domain-tag">情境領域</span>
+            <span class="index-num" id="quiz-q-counter">QUESTION 01 / 08</span>
+          </div>
+          <h3 id="quiz-question-text" style="font-size: 1.25rem; line-height: 1.45;">題目載入中…</h3>
+          <div class="quiz-options" id="quiz-options-wrap"></div>
+          <div class="quiz-feedback" id="quiz-feedback-box" aria-live="polite"></div>
+          <div style="display: flex; justify-content: space-between; gap: var(--space-sm); padding-top: var(--space-sm); border-top: var(--card-border);">
+            <button class="btn btn-secondary" type="button" id="quiz-prev-btn" onclick="moveQuiz(-1)">上一題</button>
+            <button class="btn btn-primary" type="button" id="quiz-next-btn" onclick="moveQuiz(1)">下一題</button>
+          </div>
+        </div>
+
+        <!-- Summary banner shown when all 8 answered -->
+        <div class="aside-box" id="quiz-summary-panel" style="display: none;">
+          <span class="tag-warm">評量完成總結</span>
+          <h3 id="quiz-summary-title" style="margin-top: var(--space-xs); font-size: 1.25rem;"></h3>
+          <p id="quiz-summary-desc" style="margin-top: var(--space-xs); font-size: 0.95rem;"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 06: EXTENSION VIDEO & COMMUNITY HUB -->
+    <section id="sec-community" class="section-block">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">06 · STUDY EXTENSION &amp; COMMUNITY</span>
+          <span class="dossier-meta">延伸影音學習指引與共學社團交流行動區</span>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-title">延伸影音學習與「走神蟻」共學社群實踐</h2>
+        <p class="standfirst" style="font-size: 1rem;">
+          獨自一個人往往很難發現自己正在繞圈。透過影音完整覆盤與同儕共學，為自己建立長期的外部校正視角。
+        </p>
+      </div>
+
+      <div class="extension-grid">
+        <!-- Video Study Card -->
+        <div class="figure-card" style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+            <div>
+              <span class="index-num">VIDEO ARCHIVE GUIDE</span>
+              <h3 style="font-size: 1.25rem; margin-top: 2px;">延伸影音課程：《【MD50】避開死亡螺旋》</h3>
+            </div>
+            <span class="tag-warm">完整影音導讀</span>
+          </div>
+          <p style="font-size: 0.92rem; color: var(--on-surface-variant);">
+            主講：Sophie｜頻道與筆記主題：「智慧崛起・神奇日記」三劍客（身體健康、財務健康、關係健康）。建議搭配本簡報反覆收看以下四段核心章節：
+          </p>
+          <div class="timeline-mini">
+            <div class="timeline-row">
+              <span class="index-num">PART 01｜生物原型與賽斯信念</span>
+              <span style="font-size: 0.9rem;">南美洲軍蟻演化機制、1921 蓋亞納 365 公尺圓圈與「走神蟻」啟示。</span>
+            </div>
+            <div class="timeline-row">
+              <span class="index-num">PART 02｜華爾街與台股費洛蒙</span>
+              <span style="font-size: 0.9rem;">11 月期中選舉後大震盪、巴菲特四問檢驗法、關鍵人物信任裂縫與熔斷。</span>
+            </div>
+            <div class="timeline-row">
+              <span class="index-num">PART 03｜醫療社團的恐懼迴圈</span>
+              <span style="font-size: 0.9rem;">腰椎滑脫不開刀抉擇、反向倖存者偏差、鄰近節病變與三大神經紅線。</span>
+            </div>
+            <div class="timeline-row">
+              <span class="index-num">PART 04｜自造螺旋與四工具實戰</span>
+              <span style="font-size: 0.9rem;">焦慮搜尋與 FOG 情緒勒索破局、浮空一公尺與稻盛和夫經營哲學。</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: auto;">
+            <button class="btn btn-primary" type="button" onclick="copySearchKeyword()">
+              <i data-lucide="copy" aria-hidden="true" style="width:16px;height:16px;"></i>
+              <span>複製影音搜尋關鍵字</span>
+            </button>
+            <button class="btn btn-secondary" type="button" onclick="exportStudyNotes()">
+              <i data-lucide="download" aria-hidden="true" style="width:16px;height:16px;"></i>
+              <span>匯出學習筆記 (.txt)</span>
+            </button>
+          </div>
+          <div class="inline-status" id="video-action-status" aria-live="polite"></div>
+        </div>
+
+        <!-- Community Exchange Card -->
+        <div class="figure-card" style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm);">
+            <div>
+              <span class="index-num">COMMUNITY PRACTICE HUB</span>
+              <h3 style="font-size: 1.25rem; margin-top: 2px;">社團交流與互助實踐：成為彼此的「走神蟻」</h3>
+            </div>
+            <span class="tag-slate">三劍客共學</span>
+          </div>
+          <p style="font-size: 0.92rem; color: var(--on-surface-variant);">
+            在「智慧崛起／神奇日記」共學社群或讀書會中，討論的重點不是彼此說服，而是提供安全、冷靜的外部視角。選擇一個議題範本，複製到社團發起交流：
+          </p>
+
+          <div class="chip-group" role="group" aria-label="社團討論範本切換">
+            <button class="filter-chip active" type="button" onclick="selectCommunityTopic('health', this)">身體健康議題</button>
+            <button class="filter-chip" type="button" onclick="selectCommunityTopic('finance', this)">財務健康議題</button>
+            <button class="filter-chip" type="button" onclick="selectCommunityTopic('relation', this)">關係健康議題</button>
+          </div>
+
+          <div class="prompt-template" id="community-template-box">
+            <!-- Populated by JS -->
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center;">
+            <button class="btn btn-gold" type="button" onclick="copyCommunityPrompt()">
+              <i data-lucide="message-square" aria-hidden="true" style="width:16px;height:16px;"></i>
+              <span>複製社團交流範本</span>
+            </button>
+            <span class="inline-status" id="community-copy-status" aria-live="polite"></span>
+          </div>
+
+          <div class="aside-box" style="margin-top: auto; padding: var(--space-sm) var(--space-md);">
+            <strong style="font-size: 0.85rem; color: var(--error);">緊急與專業求助界線提醒：</strong>
+            <span style="font-size: 0.84rem; color: var(--on-surface);">若關係衝突涉及暴力、威脅或以自傷逼迫就範，已超出個人界線練習範圍，請立即撥打台灣 <strong>113 保護專線</strong> 或 <strong>1925 安心專線</strong> 尋求專業支援。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="dossier-footer">
+      <span>資料彙整來源：Sophie《【MD50】避開死亡螺旋：股市震盪、脊椎自療與自造惡性循環》教學講座筆記</span>
+      <span>互動學習簡報｜所有進度與檢核紀錄均透過工作區狀態安全保存</span>
+    </footer>
+
+  </div>
+
+  <api-shim></api-shim>
+  <script>
+    /* ================================================================
+       DATA DEFINITIONS (Backtick literals throughout for safety)
+       ================================================================ */
+    const INFOGRAPHIC_MODES = {
+      closed: {
+        title: `狀態 A：封閉正回饋（死亡螺旋）`,
+        nodes: [
+          {
+            id: `c1`,
+            badge: `STEP 01`,
+            label: `失去獨立地標`,
+            sub: `缺乏外部事實檢驗`,
+            x: 320, y: 72,
+            colorToken: `var(--data-1)`,
+            warningLevel: 55,
+            biasLevel: 40,
+            detailTitle: `失去獨立地標（盲視現況）`,
+            detailDesc: `如同軍蟻眼睛退化、雨水沖散路徑，或投資人不看財報與現金流、只盯著螢幕價格跳動與社群情緒。`,
+            signal: `開始用「大家都在做」替代「我有檢驗過事實」。`,
+            action: `立即補回客觀地標：現金流、醫學統計與一手原始來源。`
+          },
+          {
+            id: `c2`,
+            badge: `STEP 02`,
+            label: `跟隨前人費洛蒙`,
+            sub: `複製群體或過去軌跡`,
+            x: 505, y: 215,
+            colorToken: `var(--data-2)`,
+            warningLevel: 72,
+            biasLevel: 68,
+            detailTitle: `跟隨前人費洛蒙（路徑依賴）`,
+            detailDesc: `假設「前面的同伴一定知道路」，無意識複製熱門股追高、社團恐慌留言或習慣性的情緒討好退讓。`,
+            signal: `感到「停下來就會落後或讓對方生氣」。`,
+            action: `先問一句：「這條路是事實鋪的，還是氣味鋪的？」`
+          },
+          {
+            id: `c3`,
+            badge: `STEP 03`,
+            label: `正回饋加濃氣味`,
+            sub: `越走越確定・排除異議`,
+            x: 320, y: 358,
+            colorToken: `var(--data-4)`,
+            warningLevel: 90,
+            biasLevel: 88,
+            detailTitle: `正回饋加濃氣味（自我強化）`,
+            detailDesc: `每繞一圈氣味便加深一層：股價越漲吸引越多人買、搜尋重症越焦慮、讓步換平靜讓對方更常施壓。`,
+            signal: `在同一個念頭或行為迴圈中反覆繞了 3 圈以上。`,
+            action: `禁止在同一思維層次找解藥，強制切換到身體行動或寫下客觀清單。`
+          },
+          {
+            id: `c4`,
+            badge: `STEP 04`,
+            label: `系統鎖死與崩潰`,
+            sub: `力竭・虧損・界線瓦解`,
+            x: 135, y: 215,
+            colorToken: `var(--error)`,
+            warningLevel: 100,
+            biasLevel: 98,
+            detailTitle: `系統鎖死與耗竭崩潰`,
+            detailDesc: `1921 年蓋亞納軍蟻繞行兩天集體倒下；市場潮水退去剛性債務引爆；身心透支或自我價值感消磨殆盡。`,
+            signal: `只剩下慣性推進，已無力思考為何出發。`,
+            action: `啟動事前設好的「紅色熔斷協議」或尋求外部專業支援。`
+          }
+        ]
+      },
+      matrix: {
+        title: `狀態 B：四大場域結構映射`,
+        nodes: [
+          {
+            id: `m1`,
+            badge: `ACT 01 · 生物`,
+            label: `南美洲行軍蟻`,
+            sub: `費洛蒙路徑 × 平坦地形`,
+            x: 175, y: 120,
+            colorToken: `var(--data-1)`,
+            warningLevel: 85,
+            biasLevel: 95,
+            detailTitle: `生物場域：螞蟻魔方（Circular Mill）`,
+            detailDesc: `觸角費洛蒙與腳部振動感測器本是高效工具，但大雨切斷隊伍後首尾相接，365 公尺圓圈轉動兩天直至全群耗竭。`,
+            signal: `全體嚴格遵守規則，卻無人抬頭確認方向。`,
+            action: `需要一隻偏離軌跡的「走神蟻」拉出新路徑。`
+          },
+          {
+            id: `m2`,
+            badge: `ACT 02 · 金融`,
+            label: `華爾街與台股`,
+            sub: `股價訊號 × 嫉妒與債務`,
+            x: 465, y: 120,
+            colorToken: `var(--data-2)`,
+            warningLevel: 80,
+            biasLevel: 78,
+            detailTitle: `金融場域：價格費洛蒙與剛性合約`,
+            detailDesc: `美股與台股劇烈震盪，追漲殺跌、高資本支出與關鍵人物信任裂縫都會引爆螺旋。潮水退去時，剛性債務無法靠共識支撐。`,
+            signal: `只盯價格跳動做決定，忽略現金流與治理結構。`,
+            action: `用巴菲特四問檢驗本質，依事前寫好的交易紀律執行。`
+          },
+          {
+            id: `m3`,
+            badge: `ACT 03 · 醫療`,
+            label: `社群醫療迴音室`,
+            sub: `反向倖存者偏差 × 恐懼`,
+            x: 175, y: 310,
+            colorToken: `var(--data-3)`,
+            warningLevel: 70,
+            biasLevel: 82,
+            detailTitle: `醫療場域：臉書社團的恐懼加濃`,
+            detailDesc: `康復者沉默、受苦者發聲，加上抹平手術與個人退化差異，使「開刀必後悔」成為壓倒醫學統計的單一氣味。`,
+            signal: `將他人的痛苦樣本直接等同於自己的預後命運。`,
+            action: `帶著眼睛做決定：配合專業評估並設定明確「神經紅線」。`
+          },
+          {
+            id: `m4`,
+            badge: `ACT 04 · 心理`,
+            label: `自造信念與 FOG`,
+            sub: `確認偏誤 × 情緒勒索`,
+            x: 465, y: 310,
+            colorToken: `var(--data-4)`,
+            warningLevel: 92,
+            biasLevel: 90,
+            detailTitle: `內在場域：信念濾網與 FOG 勒索`,
+            detailDesc: `焦慮搜尋、偽安慰透支、追逐他人焦慮，以及恐懼（F）義務（O）罪惡感（G）構成的退讓迴圈，最隱而未顯卻最具殺傷力。`,
+            signal: `說不前先排練很久、讓步後感到委屈而非平靜。`,
+            action: `在低風險小事練習說不，切記「當下是力量之點」。`
+          }
+        ]
+      },
+      break: {
+        title: `狀態 C：四大工具介入破局（開環成長螺旋）`,
+        nodes: [
+          {
+            id: `b1`,
+            badge: `TOOL 01`,
+            label: `浮空一公尺`,
+            sub: `建立高空後設認知`,
+            x: 320, y: 74,
+            colorToken: `var(--data-1)`,
+            warningLevel: 35,
+            biasLevel: 25,
+            detailTitle: `破局切入點 ①：浮空一公尺`,
+            detailDesc: `跳脫前方幾毫米的視野限制，每天留 5–10 分鐘靜坐、書寫或呼吸散步，從一公尺高空俯瞰自己是否正在繞圈。`,
+            signal: `介入時機：發現自己在同一個煩惱上打轉超過 3 圈。`,
+            action: `問自己：「這週是在向外擴展，還是在封閉圓圈裡？」`
+          },
+          {
+            id: `b2`,
+            badge: `TOOL 02`,
+            label: `允許走神蟻`,
+            sub: `從切線拉出異質新路`,
+            x: 515, y: 175,
+            colorToken: `var(--data-3)`,
+            warningLevel: 28,
+            biasLevel: 20,
+            detailTitle: `破局切入點 ②：允許一隻走神蟻`,
+            detailDesc: `刻意打破僵化同溫層：閱讀對立觀點、結交圈外朋友、換條路回家；或在市場一致性看多時，去查沒人看的債務表。`,
+            signal: `介入時機：聽到身邊所有人給出完全一致的結論時。`,
+            action: `主動尋找一位可信任的「走神蟻」（朋友、顧問或諮商師）。`
+          },
+          {
+            id: `b3`,
+            badge: `TOOL 03`,
+            label: `預先熔斷協議`,
+            sub: `在清醒時設紅色閘門`,
+            x: 455, y: 342,
+            colorToken: `var(--data-4)`,
+            warningLevel: 20,
+            biasLevel: 15,
+            detailTitle: `破局切入點 ③：預先寫好熔斷協議`,
+            detailDesc: `將健康、財務與關係的底線寫在冷靜時刻——包括股市停損點、脊椎神經紅線、失眠逾兩週強制休檢與關係冷卻條款。`,
+            signal: `介入時機：情緒極度狂熱（貪婪）或極度恐慌（內疚）之際。`,
+            action: `直接照事前寫好的書面規則執行，不與當下情緒談判。`
+          },
+          {
+            id: `b4`,
+            badge: `TOOL 04`,
+            label: `樂觀思考・悲觀計畫`,
+            sub: `轉化為向外擴展螺旋`,
+            x: 155, y: 270,
+            colorToken: `var(--data-2)`,
+            warningLevel: 15,
+            biasLevel: 12,
+            detailTitle: `破局切入點 ④：稻盛和夫經營哲學`,
+            detailDesc: `懷抱強大意圖描繪最好未來（如鍛鍊深層核心作為肌肉護腰），以悲觀主義者預備最壞防線，最後滿懷信心積極執行。`,
+            signal: `成效指標：系統從封閉耗損轉為穩健的「向外擴展螺旋」。`,
+            action: `把每次危機檢核轉化為下一個當下的重新鋪路。`
+          }
+        ]
+      }
+    };
+
+    const FLASHCARDS_DATA = [
+      {
+        id: `fc1`,
+        category: `mechanism`,
+        categoryLabel: `生物與機制`,
+        question: `什麼是「螞蟻魔方（Circular Mill）」？為何走進去的螞蟻沒有一隻犯錯？`,
+        answer: `南美洲行軍蟻視覺退化，完全遵守「跟隨前蟻費洛蒙並留下氣味」的聰明規則。當雨水沖散路徑、隊伍首尾相接形成封閉圓圈後，每一圈都會加深氣味（正回饋），讓所有遵守規則的螞蟻越走越堅定，直至集體力竭倒下。`
+      },
+      {
+        id: `fc2`,
+        category: `mechanism`,
+        categoryLabel: `生物與機制`,
+        question: `1921 年威廉·畢比（William Beebe）與 1944 年施奈爾拉的經典紀錄告訴我們什麼？`,
+        answer: `1921 年蓋亞納紀錄到周長 365 公尺的軍蟻死亡圓圈（最外圈走一圈 2.5 小時，持續約兩天）；1944 年實驗室重現並命名為「圓形魔方」。這證明平坦無障礙的環境最易形成圓圈，真正致命的是從未檢驗「前面一定知道路」的前提。`
+      },
+      {
+        id: `fc3`,
+        category: `mind`,
+        categoryLabel: `心理與破局`,
+        question: `賽斯資料如何用「氣味」比喻人類的信念系統？`,
+        answer: `「我們以為自己在看著現實，其實常常是在聞——聞著自己與別人留下的信念氣味。」信念是一張濾網，會主動篩選支持它的證據並忽略反證，使我們把重複走過的路誤當成客觀真理。`
+      },
+      {
+        id: `fc4`,
+        category: `finance`,
+        categoryLabel: `金融市場`,
+        question: `巴菲特四問的前兩問：「包裝 vs. 事實」與「吞噬現金 vs. 產生現金」分別警醒什麼？`,
+        answer: `① 當公司需要 SPV、表外融資、結構化分層等複雜金融包裝來解釋獲利時，往往是在隱藏風險（2002 年信稱其為金融大規模毀滅性武器）。② 真正護城河能以少許追加資本持續帶回現金；若背負天文數字資本支出與剛性合約，連賣鏟子的人都可能被拖下水。`
+      },
+      {
+        id: `fc5`,
+        category: `finance`,
+        categoryLabel: `金融市場`,
+        question: `為何說「股市是皮肉，債市是筋骨」？這與巴菲特的「潮水退去」有何關聯？`,
+        answer: `股價只是流動性的共識，大家相信就成立；債務卻是剛性的到期契約，現金流斷裂就會引爆違約。因此波克夏長期持有大量現金與短期國債，拒絕依賴明日資本市場的慈悲。查理·蒙格並提醒：推動泡沫派對的往往不是貪婪，而是嫉妒。`
+      },
+      {
+        id: `fc6`,
+        category: `finance`,
+        categoryLabel: `金融市場`,
+        question: `股價暴跌時賣出、反彈時買回，如何區分這是「死亡螺旋」還是「有紀律的策略」？`,
+        answer: `動作本身不等於螺旋，關鍵在於決策的時間點與依據：若是在「冷靜時事先寫好的規則」（如跌破設定支撐停損、站回條件進場），屬於紀律策略；若是在「價格劇烈跳動當下」被恐懼與嫉妒驅動，便是陷入價格費洛蒙。`
+      },
+      {
+        id: `fc7`,
+        category: `finance`,
+        categoryLabel: `金融市場`,
+        question: `從輝達關鍵人物信任事件中，可觀察到哪三種連環迴圈？該如何查證資訊？`,
+        answer: `信任裂縫可能觸發「可信度迴圈、監管迴圈、關鍵人物風險」三大螺旋，而公開認錯與董事會獨立調查則扮演了熔斷機制。在資訊瞬息萬變時，既要防盲目相信，也要防盲目懷疑，唯一解法是不斷回到最新、最原始的一手來源並允許隨時修正。`
+      },
+      {
+        id: `fc8`,
+        category: `health`,
+        categoryLabel: `醫療社群`,
+        question: `為何臉書病友社團對脊椎手術的留言常一面倒「千萬別開刀」？`,
+        answer: `由三股力量轉動：①「反向倖存者偏差」：康復重返正常生活者沉默，受苦或遭遇沾黏者才積極發聲；②「恐懼相互加濃」：後悔留言如費洛蒙吸引同溫層聚焦；③「個體差異被抹平」：忽略不同術式與個人壓迫穩定度差異。`
+      },
+      {
+        id: `fc9`,
+        category: `health`,
+        categoryLabel: `醫療社群`,
+        question: `醫學上的「鄰近節病變」代表開刀一定會越開越多次嗎？`,
+        answer: `並非手術帶有詛咒，其本質是「力學問題」。融合固定手術鎖住一節後，上下相鄰兩節會承受更多旋轉與承重。若術後仍彎腰搬重物、體重過重且不鍛鍊核心肌群，幾年內鄰近椎間盤便易受損。術後動作模式與核心保養與手術本身同等重要。`
+      },
+      {
+        id: `fc10`,
+        category: `health`,
+        categoryLabel: `醫療社群`,
+        question: `選擇暫不開刀、以運動和平共處時，必須緊盯哪三條「神經紅線」？`,
+        answer: `① 腿部無力明顯惡化（走路拖腳、腳踝抬不起來）；② 大小便失禁或解不出來，或胯下會陰部麻木（屬急診狀況，不可拖延）；③ 疼痛或麻木範圍持續擴大，且規律運動與休息數週後仍明顯惡化。`
+      },
+      {
+        id: `fc11`,
+        category: `mind`,
+        categoryLabel: `心理與破局`,
+        question: `情緒勒索（Emotional Blackmail）的三種心理燃料與四個陷入訊號是什麼？`,
+        answer: `蘇珊·弗沃德指出三燃料為「恐懼、義務、罪惡感（FOG）」。四個已陷入訊號：① 說不前先排練很久甚至放棄；② 讓步後感到委屈疲憊而非平靜；③ 對方要求越多，你的時間金錢朋友越少；④ 開始自我歸因「是我太不懂事」。`
+      },
+      {
+        id: `fc12`,
+        category: `mind`,
+        categoryLabel: `心理與破局`,
+        question: `遇到自造死亡螺旋時，如何綜合運用「四大破局工具」？`,
+        answer: `① 浮空一公尺：每日 5–10 分鐘後設覺察自己在繞圈還是擴展；② 允許走神蟻：主動接觸異質觀點與圈外建議；③ 預先熔斷協議：在清醒時寫下健康、財務與關係的紅色按鈕；④ 樂觀思考・悲觀計畫・積極執行：懷抱最佳願景、準備最壞對策並全力行動。`
+      }
+    ];
+
+    const QUIZ_DATA = [
+      {
+        domain: `生物與系統機制`,
+        question: `在南美洲軍蟻的「死亡螺旋（Circular Mill）」現象中，最終導致整群螞蟻力竭倒下的根本原因為何？`,
+        options: [
+          `A. 領頭的螞蟻故意欺騙同伴，將隊伍帶進死胡同`,
+          `B. 每一隻都遵守平常聰明的規則，卻從未檢驗「前面同伴一定知道路」的前提`,
+          `C. 地形過於崎嶇凹凸不平，導致螞蟻無法辨識方向`,
+          `D. 牠們缺乏記憶力，走完一圈後忘記自己剛才已經吃飽`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案是 B。沒有一隻螞蟻刻意犯錯，但當雨水沖散路徑且缺乏外部視覺地標時，正回饋機制會因路線被重複走過而加濃費洛蒙，反而鎖死在未經檢驗的前提裡。`
+      },
+      {
+        domain: `金融市場與紀律`,
+        question: `當台股與美股因突發事件劇烈震盪時，一位投資人在股價跌破某個價位時賣出，幾週後站回特定條件又重新買進。這是否一定屬於「死亡螺旋」？`,
+        options: [
+          `A. 是，只要在下跌賣出、上漲買回，就一定是盲從追高殺低`,
+          `B. 不是，只要他買進的是熱門 AI 概念股就不會是死亡螺旋`,
+          `C. 不一定，關鍵在於決策是在「冷靜時事先寫好的規則」還是「價格跳動當下」做的`,
+          `D. 只要他參考了社群媒體大多數人的共識，就不算死亡螺旋`
+        ],
+        correctIndex: 2,
+        explanation: `正確答案是 C。「動作本身不等於螺旋」。事前冷靜寫好的停損與再進場條件是有紀律的策略；在盤中價格跳動當下受恐懼或嫉妒驅動才構成價格費洛蒙螺旋。`
+      },
+      {
+        domain: `巴菲特四問檢驗`,
+        question: `在評估高熱度產業（如需要龐大資本支出與長期剛性合約的供應鏈）時，巴菲特四問最強調必須穿透「故事敘事」去檢驗哪兩項硬指標？`,
+        options: [
+          `A. 創辦人社群追蹤人數與最新衍生性商品包裝名稱`,
+          `B. 實質現金流產生能力與剛性債務／合約風險`,
+          `C. 每日股價漲跌幅與單季投資銀行的成交量`,
+          `D. 媒體報導正負面比例與市場總市值排名`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案是 B。股市是皮肉，債市是筋骨。當營收一夜縮水時，剛性合約成本卻一毛不能少；唯有檢視自由現金流與債務結構，才能看清潮水退去後誰在裸泳。`
+      },
+      {
+        domain: `醫療社群與認知偏差`,
+        question: `為何臉書醫療社團常出現一面倒「千萬不要開刀，開了會後悔」的留言，進而掩蓋了客觀的醫學統計？`,
+        options: [
+          `A. 因為開刀後的患者全部都會立刻出現嚴重的鄰近節病變`,
+          `B. 因為社群樣本呈現「康復者沉默、受苦者發聲」的反向倖存者偏差，且恐懼相互加濃`,
+          `C. 因為醫院為了推銷自費器材而刻意封鎖正面的開刀心得`,
+          `D. 因為所有的脊椎手術方式（微創、融合、人工椎間盤）風險都完全相同`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案是 B。手術順利恢復正常生活的人不會天天到社團報告；留在版面上的多是遭遇術後痛或沾黏的個案，加上恐懼共鳴與抹平術式及個體差異，使社群形成費洛蒙死衚衕。`
+      },
+      {
+        domain: `健康紅線判斷`,
+        question: `若家人經評估選擇暫不開脊椎手術、改以鍛鍊核心肌群與運動和平共處，下列哪一項屬於必須「立即急診就醫」的紅色熔斷警訊？`,
+        options: [
+          `A. 運動隔天腰部肌肉出現輕微痠痛感`,
+          `B. 在網路上看到陌生網友分享十年前開刀失敗的經驗`,
+          `C. 出現大小便失禁、解不出來，或胯下會陰部麻木`,
+          `D. 鄰居推薦一款昂貴但沒有實證依據的民間偏方`
+        ],
+        correctIndex: 2,
+        explanation: `正確答案是 C。大小便失禁／滯留與胯下會陰部麻木代表嚴重神經壓迫（馬尾症候群警訊），屬於急診狀況，不可再觀望等待；另兩條紅線則是腿部進行性無力與疼痛麻木持續擴大惡化。`
+      },
+      {
+        domain: `心理與焦慮破局`,
+        question: `當你因為身體一點小不適而上網查到罕見重症，越查越焦慮、越焦慮越注意身體訊號，在同一個煩惱裡繞了三圈以上時，最有效的打破方式為何？`,
+        options: [
+          `A. 繼續在搜尋引擎深入比對更多醫學論文，直到完全確定沒事為止`,
+          `B. 不要在同一思維層次找解藥，改用身體行動（散步、曬太陽、洗熱水澡）沖淡腦內費洛蒙`,
+          `C. 熬夜滑手機並吃高油高糖食物來犒賞自己、轉移注意力`,
+          `D. 詢問同樣極度焦慮的朋友，確認大家是不是也這麼害怕`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案是 B。繞三圈以上時，「想更多」只會讓焦慮軌跡更深；必須切換思維層次，透過具體身體行動打破腦內迴圈。選項 C 則是長期透支未來的「偽安慰習慣」。`
+      },
+      {
+        domain: `關係界線與情緒勒索`,
+        question: `當你開始練習在低風險小事上設下界線（例如「這件事我需要想一天再回覆你」），結果對方施壓與反彈反而先變大。這通常代表什麼意義？`,
+        options: [
+          `A. 代表你設錯界線，應該立刻內疚道歉並撤回決定`,
+          `B. 代表對方沒有使用任何情緒勒索燃料，只是單純關心你`,
+          `C. 這是預期中的反應，反而證明你們原本「施壓—退讓」的舊迴圈正在被打破`,
+          `D. 代表你應該永遠不再與任何家人或伴侶溝通`
+        ],
+        correctIndex: 2,
+        explanation: `正確答案是 C。過去對方已透過正回饋學到「施壓有用」，當你停止自動退讓時，舊系統必然會出現反彈；預期這個反彈並守住冷靜寫下的熔斷條款，正是破局關鍵。`
+      },
+      {
+        domain: `四大破局工具整合`,
+        question: `關於「允許一隻走神蟻」與「浮空一公尺」兩大破局工具，下列哪一組日常實踐最能準確體現它們的精神？`,
+        options: [
+          `A. 每天看盤八小時確保不錯過任何漲幅，並只追蹤意見完全相同的分析師`,
+          `B. 每天留 5–10 分鐘靜坐寫日記檢視思考方向，並刻意閱讀不同觀點書籍、認識圈外朋友`,
+          `C. 凡事聽從權威或社團多數決，確保自己絕對不會與大眾脫隊`,
+          `D. 樂觀相信一切都會自然變好，因此不需要預先制定任何最壞情況的對策`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案是 B。「浮空一公尺」是每日留白培養後設認知，檢視自己在擴展螺旋還是封閉圓圈；「允許走神蟻」則是刻意引入異質視角與安全變數。選項 D 遺漏了稻盛和夫哲學中的「悲觀計畫」。`
+      }
+    ];
+
+    const COMMUNITY_TOPICS = {
+      health: `【身體健康｜帶著眼睛走路分享】\n最近面對一個健康／復健上的選擇，我整理了自己的客觀指標：\n1. 我目前看到的「恐懼費洛蒙」或單一極端意見是：\n2. 我查證到的醫學事實與個體差異是：\n3. 我為自己或家人設定的「紅色就醫警訊（熔斷條款）」是：\n歡迎大家當我的「走神蟻」，提供不同角度的理性提醒！`,
+      finance: `【財務健康｜巴菲特四問實戰檢核】\n最近正在觀察一項投資標的或市場熱潮，我試著把鼻子從股價氣味移開，檢視這四題：\n1. 它的獲利是事實還是結構包裝？\n2. 自由現金流能覆蓋剛性合約與資本支出嗎？\n3. 管理層與外部股東的風險收益是否對稱？\n4. 我冷靜時設定好的停損／停利紀律線在哪裡？\n想邀請社群夥伴一起幫忙盲點檢視！`,
+      relation: `【關係與內在｜練習小界線回顧】\n這週我進行了一次「浮空一公尺」覺察，發現自己在某個想法或關係互動裡繞圈：\n1. 引發我慣性退讓或焦慮的燃料是（恐懼／義務／罪惡感／他人焦慮）：\n2. 我嘗試設立的一個低風險小界線是（例如延後一天回覆）：\n3. 執行後我觀察到的反彈與內在感受變化是：\n記錄下來，提醒自己「當下就是重新鋪路的力量之點」。`
+    };
+
+    /* ================================================================
+       APP STATE (Persisted via window.notebookAppApi)
+       ================================================================ */
+    let appState = {
+      infographicMode: `closed`,
+      selectedNodeId: `c1`,
+      simScent: 75,
+      simBreaker: 30,
+      checklist: {
+        'chk-1': false, 'chk-2': false, 'chk-3': false,
+        'chk-4': false, 'chk-5': false, 'chk-6': false
+      },
+      flashcardFilter: `all`,
+      flashcardOrder: FLASHCARDS_DATA.map(c => c.id),
+      flashcardIndex: 0,
+      flashcardFlipped: false,
+      masteredIds: [],
+      quizIndex: 0,
+      quizAnswers: {},
+      communityTopic: `health`
+    };
+
+    /* ================================================================
+       PERSISTENCE HELPERS
+       ================================================================ */
+    async function loadPersistedState() {
+      if (!window.notebookAppApi || typeof window.notebookAppApi.getAppState !== 'function') {
+        return;
+      }
+      try {
+        const saved = await window.notebookAppApi.getAppState();
+        if (saved && typeof saved === 'object') {
+          if (saved.infographicMode && INFOGRAPHIC_MODES[saved.infographicMode]) {
+            appState.infographicMode = saved.infographicMode;
+          }
+          if (typeof saved.selectedNodeId === 'string') appState.selectedNodeId = saved.selectedNodeId;
+          if (typeof saved.simScent === 'number') appState.simScent = saved.simScent;
+          if (typeof saved.simBreaker === 'number') appState.simBreaker = saved.simBreaker;
+          if (saved.checklist && typeof saved.checklist === 'object') {
+            appState.checklist = Object.assign({}, appState.checklist, saved.checklist);
+          }
+          if (typeof saved.flashcardFilter === 'string') appState.flashcardFilter = saved.flashcardFilter;
+          if (Array.isArray(saved.flashcardOrder) && saved.flashcardOrder.length === FLASHCARDS_DATA.length) {
+            appState.flashcardOrder = saved.flashcardOrder;
+          }
+          if (typeof saved.flashcardIndex === 'number') appState.flashcardIndex = saved.flashcardIndex;
+          if (Array.isArray(saved.masteredIds)) appState.masteredIds = saved.masteredIds;
+          if (typeof saved.quizIndex === 'number') appState.quizIndex = saved.quizIndex;
+          if (saved.quizAnswers && typeof saved.quizAnswers === 'object') appState.quizAnswers = saved.quizAnswers;
+          if (typeof saved.communityTopic === 'string' && COMMUNITY_TOPICS[saved.communityTopic]) {
+            appState.communityTopic = saved.communityTopic;
+          }
+        }
+      } catch (err) {
+        // Fallback gracefully if no saved state exists
+      }
+    }
+
+    async function savePersistedState() {
+      if (!window.notebookAppApi || typeof window.notebookAppApi.setAppState !== 'function') {
+        return;
+      }
+      try {
+        await window.notebookAppApi.setAppState(appState);
+      } catch (err) {
+        // Ignore transient write errors
+      }
+    }
+
+    /* ================================================================
+       ACCORDION INTERACTION
+       ================================================================ */
+    function toggleAccordion(btn) {
+      if (!btn) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      const panel = btn.nextElementSibling;
+      if (panel) {
+        panel.classList.toggle('open', !expanded);
+      }
+    }
+
+    /* ================================================================
+       INTERACTIVE INFOGRAPHIC (SVG + INSPECTOR + SIMULATOR)
+       ================================================================ */
+    function setInfographicMode(mode) {
+      if (!INFOGRAPHIC_MODES[mode]) return;
+      appState.infographicMode = mode;
+      appState.selectedNodeId = INFOGRAPHIC_MODES[mode].nodes[0].id;
+
+      const btns = {
+        closed: document.getElementById('btn-mode-closed'),
+        matrix: document.getElementById('btn-mode-matrix'),
+        break: document.getElementById('btn-mode-break')
+      };
+      Object.keys(btns).forEach(k => {
+        if (btns[k]) btns[k].classList.toggle('active', k === mode);
+      });
+
+      renderInfographic();
+      savePersistedState();
+    }
+
+    function selectInfographicNode(nodeId) {
+      appState.selectedNodeId = nodeId;
+      renderInfographic();
+      savePersistedState();
+    }
+
+    function renderInfographic() {
+      const svg = document.getElementById('system-svg');
+      const inspector = document.getElementById('infographic-inspector');
+      if (!svg || !inspector) return;
+
+      const modeObj = INFOGRAPHIC_MODES[appState.infographicMode] || INFOGRAPHIC_MODES.closed;
+      const nodes = modeObj.nodes;
+      let activeNode = nodes.find(n => n.id === appState.selectedNodeId);
+      if (!activeNode) {
+        activeNode = nodes[0];
+        appState.selectedNodeId = activeNode.id;
+      }
+
+      // Compute simulator visual radius / trajectory effect
+      const netForce = appState.simBreaker - appState.simScent * 0.65;
+      const isBreakingOut = netForce >= 12;
+
+      let svgMarkup = `
+        <defs>
+          <marker id="arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--data-4)"></path>
+          </marker>
+          <marker id="arrow-break" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--data-3)"></path>
+          </marker>
+          <marker id="arrow-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--data-1)"></path>
+          </marker>
+        </defs>
+      `;
+
+      // Mode title watermark inside SVG
+      svgMarkup += `
+        <text x="20" y="28" font-size="12" class="svg-text-mono">${modeObj.title}</text>
+      `;
+
+      if (appState.infographicMode === 'closed') {
+        // Concentric tightening rings representing Circular Mill
+        svgMarkup += `
+          <circle cx="320" cy="215" r="150" fill="none" stroke="var(--outline-variant)" stroke-width="1.5" stroke-dasharray="6 5"></circle>
+          <circle cx="320" cy="215" r="118" fill="none" stroke="var(--data-2)" stroke-width="2" opacity="0.55"></circle>
+          <circle cx="320" cy="215" r="82" fill="none" stroke="var(--data-4)" stroke-width="2.5" opacity="0.8"></circle>
+          <circle cx="320" cy="215" r="46" fill="var(--error-container)" stroke="var(--error)" stroke-width="1.5"></circle>
+          <text x="320" y="211" text-anchor="middle" font-size="13" class="svg-text-main">封閉圓圈</text>
+          <text x="320" y="229" text-anchor="middle" font-size="11" class="svg-text-sub">正回饋鎖死</text>
+          <!-- Curved directional flow arrows -->
+          <path d="M 380 86 A 145 145 0 0 1 482 162" fill="none" stroke="var(--data-4)" stroke-width="2.5" marker-end="url(#arrow-loop)"></path>
+          <path d="M 482 268 A 145 145 0 0 1 380 344" fill="none" stroke="var(--data-4)" stroke-width="2.5" marker-end="url(#arrow-loop)"></path>
+          <path d="M 260 344 A 145 145 0 0 1 158 268" fill="none" stroke="var(--data-4)" stroke-width="2.5" marker-end="url(#arrow-loop)"></path>
+          <path d="M 158 162 A 145 145 0 0 1 260 86" fill="none" stroke="var(--data-4)" stroke-width="2.5" marker-end="url(#arrow-loop)"></path>
+        `;
+      } else if (appState.infographicMode === 'matrix') {
+        // Crosshair axes dividing 4 arenas around central Positive Feedback Core
+        svgMarkup += `
+          <line x1="320" y1="55" x2="320" y2="395" stroke="var(--outline-variant)" stroke-width="1.5" stroke-dasharray="4 4"></line>
+          <line x1="45" y1="215" x2="595" y2="215" stroke="var(--outline-variant)" stroke-width="1.5" stroke-dasharray="4 4"></line>
+          <circle cx="320" cy="215" r="64" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="1.5"></circle>
+          <text x="320" y="210" text-anchor="middle" font-size="13" class="svg-text-main">同一套核心機制</text>
+          <text x="320" y="228" text-anchor="middle" font-size="11" class="svg-text-main">氣味取代事實</text>
+          <line x1="230" y1="150" x2="270" y2="178" stroke="var(--data-1)" stroke-width="2" marker-end="url(#arrow-slate)"></line>
+          <line x1="410" y1="150" x2="370" y2="178" stroke="var(--data-1)" stroke-width="2" marker-end="url(#arrow-slate)"></line>
+          <line x1="230" y1="280" x2="270" y2="252" stroke="var(--data-1)" stroke-width="2" marker-end="url(#arrow-slate)"></line>
+          <line x1="410" y1="280" x2="370" y2="252" stroke="var(--data-1)" stroke-width="2" marker-end="url(#arrow-slate)"></line>
+        `;
+      } else {
+        // Mode C: Breaking the closed loop into an outward expanding spiral
+        svgMarkup += `
+          <circle cx="265" cy="225" r="110" fill="none" stroke="var(--data-context)" stroke-width="2" stroke-dasharray="6 6"></circle>
+          <text x="265" y="220" text-anchor="middle" font-size="12" class="svg-text-sub">舊慣性軌道</text>
+          <text x="265" y="238" text-anchor="middle" font-size="11" class="svg-text-sub">(已由熔斷切開)</text>
+          <!-- Expanding outward escape path -->
+          <path d="M 170 250 C 190 135, 315 95, 425 130 C 495 155, 535 235, 505 305 C 475 370, 340 385, 225 320" fill="none" stroke="var(--data-3)" stroke-width="3" marker-end="url(#arrow-break)"></path>
+          <path d="M 415 128 L 575 78" fill="none" stroke="var(--data-1)" stroke-width="2.5" stroke-dasharray="4 3" marker-end="url(#arrow-slate)"></path>
+          <text x="530" y="64" text-anchor="middle" font-size="12" class="svg-text-mono">OUTWARD SPIRAL</text>
+        `;
+      }
+
+      // Render interactive node cards inside SVG
+      nodes.forEach(node => {
+        const isSelected = node.id === activeNode.id;
+        const boxW = 166;
+        const boxH = 68;
+        const rx = node.x - boxW / 2;
+        const ry = node.y - boxH / 2;
+        const fillStyle = isSelected ? `var(--surface-container-low)` : `var(--surface-container)`;
+        const strokeColor = isSelected ? `var(--outline)` : node.colorToken;
+        const strokeW = isSelected ? 2.5 : 1.5;
+
+        svgMarkup += `
+          <g class="svg-node" tabindex="0" role="button" aria-label="${node.label}" onclick="selectInfographicNode('${node.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectInfographicNode('${node.id}');}">
+            <rect x="${rx}" y="${ry}" width="${boxW}" height="${boxH}" rx="6" fill="${fillStyle}" stroke="${strokeColor}" stroke-width="${strokeW}"></rect>
+            <rect x="${rx}" y="${ry}" width="6" height="${boxH}" rx="2" fill="${node.colorToken}"></rect>
+            <text x="${rx + 16}" y="${ry + 20}" font-size="10.5" class="svg-text-mono">${node.badge}</text>
+            <text x="${rx + 16}" y="${ry + 39}" font-size="13.5" class="svg-text-main">${node.label}</text>
+            <text x="${rx + 16}" y="${ry + 56}" font-size="11" class="svg-text-sub">${node.sub}</text>
+          </g>
+        `;
+      });
+
+      // Live trajectory indicator pill in SVG bottom-left
+      const statusPillFill = isBreakingOut ? `var(--positive-container)` : `var(--error-container)`;
+      const statusPillText = isBreakingOut ? `模擬結果：成功脫離圓圈（向外擴展）` : `模擬結果：氣味慣性仍大於熔斷（繞圈中）`;
+      svgMarkup += `
+        <rect x="18" y="392" width="295" height="28" rx="4" fill="${statusPillFill}" stroke="var(--outline-variant)" stroke-width="1"></rect>
+        <text x="28" y="410" font-size="11.5" class="svg-text-main">${statusPillText}</text>
+      `;
+
+      svg.innerHTML = svgMarkup;
+
+      // Render Inspector Side Panel
+      inspector.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:var(--space-sm);">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:var(--space-xs);">
+            <span class="tag-warm">${activeNode.badge}</span>
+            <span class="index-num">節點診斷</span>
+          </div>
+          <h3 style="font-size:1.25rem; line-height:1.3;">${activeNode.detailTitle}</h3>
+          <p style="font-size:0.9375rem; line-height:1.6;">${activeNode.detailDesc}</p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:var(--space-sm); padding-top:var(--space-sm); border-top:var(--card-border);">
+          <div class="inspector-stat-bar">
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:600;">
+              <span>系統風險 / 鎖死張力</span>
+              <span style="font-family:var(--font-label);">${activeNode.warningLevel}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${activeNode.warningLevel}%; background-color:${activeNode.warningLevel >= 70 ? 'var(--data-4)' : 'var(--data-3)'};"></div>
+            </div>
+          </div>
+          <div class="inspector-stat-bar">
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:600;">
+              <span>群體氣味依賴度</span>
+              <span style="font-family:var(--font-label);">${activeNode.biasLevel}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${activeNode.biasLevel}%; background-color:${activeNode.biasLevel >= 70 ? 'var(--data-2)' : 'var(--data-1)'};"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-container-low); border:var(--card-border); border-radius:var(--rounded); padding:var(--space-sm) var(--space-md); display:flex; flex-direction:column; gap:6px;">
+          <div style="font-size:0.85rem;"><strong>識別警訊：</strong>${activeNode.signal}</div>
+          <div style="font-size:0.85rem; color:var(--secondary);"><strong>破局行動：</strong>${activeNode.action}</div>
+        </div>
+      `;
+    }
+
+    function updateSpiralSimulator() {
+      const sSlider = document.getElementById('slider-scent');
+      const bSlider = document.getElementById('slider-breaker');
+      const sVal = document.getElementById('val-scent');
+      const bVal = document.getElementById('val-breaker');
+      const statusEl = document.getElementById('sim-status');
+      const adviceEl = document.getElementById('sim-advice');
+      if (!sSlider || !bSlider || !sVal || !bVal || !statusEl || !adviceEl) return;
+
+      appState.simScent = Number(sSlider.value);
+      appState.simBreaker = Number(bSlider.value);
+
+      sVal.textContent = `${appState.simScent}%`;
+      bVal.textContent = `${appState.simBreaker}%`;
+
+      const net = appState.simBreaker - appState.simScent * 0.65;
+      if (net >= 15) {
+        statusEl.textContent = `安全狀態：成功轉為向外擴展的成長螺旋`;
+        statusEl.style.color = `var(--positive)`;
+        adviceEl.textContent = `你的後設覺察與熔斷底線足以抵抗從眾氣味，持續保持定期檢驗即可。`;
+      } else if (net >= -10) {
+        statusEl.textContent = `警戒邊緣：處於拉扯狀態，需補強走神蟻視角`;
+        statusEl.style.color = `var(--warning)`;
+        adviceEl.textContent = `群體氣味與個人紀律勢均力敵，建議在冷靜時刻白紙黑字寫下熔斷條件。`;
+      } else {
+        statusEl.textContent = `高風險：正在加速收縮的封閉圓圈`;
+        statusEl.style.color = `var(--error)`;
+        adviceEl.textContent = `情緒氣味遠高於熔斷力，建議立即停止在同層次思考，進行身體移動或尋求外部協助。`;
+      }
+
+      renderInfographic();
+      savePersistedState();
+    }
+
+    /* ================================================================
+       CHECKLIST LOGIC
+       ================================================================ */
+    function toggleChecklistItem(chkId) {
+      const el = document.getElementById(chkId);
+      if (!el) return;
+      appState.checklist[chkId] = Boolean(el.checked);
+      renderChecklist();
+      savePersistedState();
+    }
+
+    function renderChecklist() {
+      let count = 0;
+      const keys = Object.keys(appState.checklist);
+      keys.forEach(id => {
+        const input = document.getElementById(id);
+        const row = input ? input.closest('.check-row') : null;
+        const checked = Boolean(appState.checklist[id]);
+        if (input) input.checked = checked;
+        if (row) row.classList.toggle('checked', checked);
+        if (checked) count++;
+      });
+      const counter = document.getElementById('checklist-counter');
+      if (counter) counter.textContent = `已建立 ${count} / ${keys.length} 項熔斷機制`;
+    }
+
+    /* ================================================================
+       FLASHCARDS LOGIC
+       ================================================================ */
+    function getFilteredFlashcards() {
+      const ordered = appState.flashcardOrder
+        .map(id => FLASHCARDS_DATA.find(c => c.id === id))
+        .filter(Boolean);
+      if (appState.flashcardFilter === 'all') return ordered;
+      return ordered.filter(c => c.category === appState.flashcardFilter);
+    }
+
+    function filterFlashcards(category, btnEl) {
+      appState.flashcardFilter = category;
+      appState.flashcardIndex = 0;
+      appState.flashcardFlipped = false;
+
+      const group = btnEl ? btnEl.parentElement : null;
+      if (group) {
+        group.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+      }
+      renderFlashcard();
+      savePersistedState();
+    }
+
+    function shuffleFlashcards() {
+      const arr = appState.flashcardOrder.slice();
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+      }
+      appState.flashcardOrder = arr;
+      appState.flashcardIndex = 0;
+      appState.flashcardFlipped = false;
+      renderFlashcard();
+      savePersistedState();
+    }
+
+    function flipFlashcard() {
+      appState.flashcardFlipped = !appState.flashcardFlipped;
+      const cardEl = document.getElementById('flashcard-el');
+      if (cardEl) {
+        cardEl.classList.toggle('flipped', appState.flashcardFlipped);
+        cardEl.setAttribute('aria-pressed', appState.flashcardFlipped ? 'true' : 'false');
+      }
+    }
+
+    function handleCardKey(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        flipFlashcard();
+      }
+    }
+
+    function prevFlashcard() {
+      const list = getFilteredFlashcards();
+      if (!list.length) return;
+      appState.flashcardIndex = (appState.flashcardIndex - 1 + list.length) % list.length;
+      appState.flashcardFlipped = false;
+      renderFlashcard();
+      savePersistedState();
+    }
+
+    function nextFlashcard() {
+      const list = getFilteredFlashcards();
+      if (!list.length) return;
+      appState.flashcardIndex = (appState.flashcardIndex + 1) % list.length;
+      appState.flashcardFlipped = false;
+      renderFlashcard();
+      savePersistedState();
+    }
+
+    function markCardMastery(isMastered) {
+      const list = getFilteredFlashcards();
+      if (!list.length) return;
+      const card = list[appState.flashcardIndex];
+      if (!card) return;
+
+      const idx = appState.masteredIds.indexOf(card.id);
+      if (isMastered && idx === -1) {
+        appState.masteredIds.push(card.id);
+      } else if (!isMastered && idx !== -1) {
+        appState.masteredIds.splice(idx, 1);
+      }
+      renderFlashcard();
+      updateGlobalProgress();
+      savePersistedState();
+    }
+
+    function renderFlashcard() {
+      const list = getFilteredFlashcards();
+      const cardEl = document.getElementById('flashcard-el');
+      const catTag = document.getElementById('fc-category-tag');
+      const idxLabel = document.getElementById('fc-index-label');
+      const backIdx = document.getElementById('fc-back-index');
+      const qEl = document.getElementById('fc-question');
+      const aEl = document.getElementById('fc-answer');
+      const badgeEl = document.getElementById('fc-status-badge');
+      const statEl = document.getElementById('fc-mastery-stat');
+
+      if (!list.length || !cardEl) return;
+      if (appState.flashcardIndex >= list.length) appState.flashcardIndex = 0;
+
+      const card = list[appState.flashcardIndex];
+      const posLabel = `CARD ${String(appState.flashcardIndex + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
+      const isMastered = appState.masteredIds.includes(card.id);
+
+      cardEl.classList.toggle('flipped', Boolean(appState.flashcardFlipped));
+      cardEl.setAttribute('aria-pressed', appState.flashcardFlipped ? 'true' : 'false');
+
+      if (catTag) catTag.textContent = card.categoryLabel;
+      if (idxLabel) idxLabel.textContent = posLabel;
+      if (backIdx) backIdx.textContent = posLabel;
+      if (qEl) qEl.textContent = card.question;
+      if (aEl) aEl.textContent = card.answer;
+      if (badgeEl) {
+        badgeEl.textContent = isMastered ? `已掌握` : `待複習`;
+        badgeEl.className = isMastered ? `tag-slate` : `tag-warm`;
+      }
+      if (statEl) {
+        statEl.textContent = `已掌握 ${appState.masteredIds.length} / ${FLASHCARDS_DATA.length} 張`;
+      }
+    }
+
+    /* ================================================================
+       QUIZ LOGIC
+       ================================================================ */
+    function jumpToQuizQuestion(index) {
+      if (index < 0 || index >= QUIZ_DATA.length) return;
+      appState.quizIndex = index;
+      renderQuiz();
+      savePersistedState();
+    }
+
+    function moveQuiz(delta) {
+      const next = appState.quizIndex + delta;
+      if (next >= 0 && next < QUIZ_DATA.length) {
+        appState.quizIndex = next;
+        renderQuiz();
+        savePersistedState();
+      }
+    }
+
+    function selectQuizOption(optionIndex) {
+      const qKey = String(appState.quizIndex);
+      appState.quizAnswers[qKey] = optionIndex;
+      renderQuiz();
+      updateGlobalProgress();
+      savePersistedState();
+    }
+
+    function resetQuiz(btn) {
+      if (btn && btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.textContent = `再次點擊確認重設測驗`;
+        return;
+      }
+      if (btn) {
+        btn.dataset.armed = 'false';
+        btn.textContent = `重新作答全部題目`;
+      }
+      appState.quizAnswers = {};
+      appState.quizIndex = 0;
+      renderQuiz();
+      updateGlobalProgress();
+      savePersistedState();
+    }
+
+    function renderQuiz() {
+      const stepper = document.getElementById('quiz-stepper');
+      const domainTag = document.getElementById('quiz-domain-tag');
+      const qCounter = document.getElementById('quiz-q-counter');
+      const qText = document.getElementById('quiz-question-text');
+      const optionsWrap = document.getElementById('quiz-options-wrap');
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      const prevBtn = document.getElementById('quiz-prev-btn');
+      const nextBtn = document.getElementById('quiz-next-btn');
+      const scoreBadge = document.getElementById('quiz-score-badge');
+      const summaryPanel = document.getElementById('quiz-summary-panel');
+      const summaryTitle = document.getElementById('quiz-summary-title');
+      const summaryDesc = document.getElementById('quiz-summary-desc');
+
+      if (!stepper || !optionsWrap || !qText) return;
+
+      // Render stepper & compute score
+      let correctCount = 0;
+      let answeredCount = 0;
+      let stepperHtml = ``;
+      QUIZ_DATA.forEach((q, idx) => {
+        const ans = appState.quizAnswers[String(idx)];
+        let cls = `step-dot`;
+        if (idx === appState.quizIndex) cls += ` current`;
+        if (typeof ans === 'number') {
+          answeredCount++;
+          if (ans === q.correctIndex) {
+            correctCount++;
+            cls += ` correct`;
+          } else {
+            cls += ` wrong`;
+          }
+        }
+        stepperHtml += `<button class="${cls}" type="button" onclick="jumpToQuizQuestion(${idx})" aria-label="前往第 ${idx + 1} 題">${idx + 1}</button>`;
+      });
+      stepper.innerHTML = stepperHtml;
+
+      const currentQ = QUIZ_DATA[appState.quizIndex];
+      const userAnswer = appState.quizAnswers[String(appState.quizIndex)];
+      const hasAnswered = typeof userAnswer === 'number';
+
+      if (domainTag) domainTag.textContent = currentQ.domain;
+      if (qCounter) qCounter.textContent = `QUESTION ${String(appState.quizIndex + 1).padStart(2, '0')} / ${String(QUIZ_DATA.length).padStart(2, '0')}`;
+      qText.textContent = currentQ.question;
+      if (scoreBadge) scoreBadge.textContent = `目前得分：${correctCount} / ${QUIZ_DATA.length}`;
+
+      let optsHtml = ``;
+      const keys = [`A`, `B`, `C`, `D`];
+      currentQ.options.forEach((optText, idx) => {
+        let optCls = `quiz-option`;
+        if (hasAnswered) {
+          if (idx === currentQ.correctIndex) optCls += ` selected-correct`;
+          else if (idx === userAnswer) optCls += ` selected-wrong`;
+        }
+        const cleanLabel = optText.replace(/^[A-D]\.\s*/, '');
+        optsHtml += `
+          <button class="${optCls}" type="button" onclick="selectQuizOption(${idx})" aria-pressed="${userAnswer === idx ? 'true' : 'false'}">
+            <span class="opt-key">${keys[idx]}</span>
+            <span>${cleanLabel}</span>
+          </button>
+        `;
+      });
+      optionsWrap.innerHTML = optsHtml;
+
+      if (feedbackBox) {
+        if (hasAnswered) {
+          const isCorrect = userAnswer === currentQ.correctIndex;
+          feedbackBox.className = `quiz-feedback visible ${isCorrect ? 'is-correct' : 'is-wrong'}`;
+          feedbackBox.innerHTML = `
+            <strong style="display:block; margin-bottom:4px;">${isCorrect ? '判斷精準！已辨識系統關鍵' : '留意費洛蒙盲區！再看一次機制解析'}</strong>
+            <span style="font-size:0.92rem;">${currentQ.explanation}</span>
+          `;
+        } else {
+          feedbackBox.className = `quiz-feedback`;
+          feedbackBox.innerHTML = ``;
+        }
+      }
+
+      if (prevBtn) prevBtn.disabled = appState.quizIndex === 0;
+      if (nextBtn) nextBtn.disabled = appState.quizIndex === QUIZ_DATA.length - 1;
+
+      if (summaryPanel && summaryTitle && summaryDesc) {
+        if (answeredCount === QUIZ_DATA.length) {
+          summaryPanel.style.display = `block`;
+          const pct = Math.round((correctCount / QUIZ_DATA.length) * 100);
+          summaryTitle.textContent = `已完成全部 ${QUIZ_DATA.length} 題評量｜答對 ${correctCount} 題（${pct}%）`;
+          if (pct >= 85) {
+            summaryDesc.textContent = `你已經具備相當敏銳的「浮空一公尺」視角，能精準辨識市場、醫療與心理中的正回饋陷阱。接下來可進一步下載學習筆記並建立個人熔斷條款。`;
+          } else if (pct >= 60) {
+            summaryDesc.textContent = `你掌握了大部分核心概念，建議利用上方「記憶卡片」針對答錯的領域再次複習，特別留意正向／負向情緒加濃的辨識技巧。`;
+          } else {
+            summaryDesc.textContent = `系統性盲從非常隱蔽！建議重新操作「互動資訊圖表」中的四大場域映射與記憶卡片，再回來挑戰一次評量。`;
+          }
+        } else {
+          summaryPanel.style.display = `none`;
+        }
+      }
+    }
+
+    function updateGlobalProgress() {
+      const pill = document.getElementById('global-progress-pill');
+      if (!pill) return;
+      const answeredCount = Object.keys(appState.quizAnswers).length;
+      pill.textContent = `記憶卡 ${appState.masteredIds.length}/${FLASHCARDS_DATA.length} · 評量 ${answeredCount}/${QUIZ_DATA.length}`;
+    }
+
+    /* ================================================================
+       EXTENSION VIDEO & COMMUNITY HUB HANDLERS
+       ================================================================ */
+    function selectCommunityTopic(topicKey, btnEl) {
+      if (!COMMUNITY_TOPICS[topicKey]) return;
+      appState.communityTopic = topicKey;
+      const group = btnEl ? btnEl.parentElement : null;
+      if (group) {
+        group.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+      }
+      renderCommunityTemplate();
+      savePersistedState();
+    }
+
+    function renderCommunityTemplate() {
+      const box = document.getElementById('community-template-box');
+      if (!box) return;
+      const text = COMMUNITY_TOPICS[appState.communityTopic] || COMMUNITY_TOPICS.health;
+      box.innerHTML = text.replace(/\n/g, '<br>');
+    }
+
+    async function copyTextWithFallback(text, statusEl, successMsg) {
+      if (!statusEl) return;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          statusEl.textContent = successMsg;
+          return;
+        }
+      } catch (err) {
+        // Fallback below
+      }
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.opacity = '0';
+      document.body.appendChild(temp);
+      temp.select();
+      try {
+        document.execCommand('copy');
+        statusEl.textContent = successMsg;
+      } catch (e) {
+        statusEl.textContent = `請手動選取上方文字複製：${text}`;
+      }
+      document.body.removeChild(temp);
+    }
+
+    function copySearchKeyword() {
+      const statusEl = document.getElementById('video-action-status');
+      copyTextWithFallback(
+        `MD50 避開死亡螺旋 Sophie 智慧崛起`,
+        statusEl,
+        `已複製影音搜尋關鍵字：「MD50 避開死亡螺旋 Sophie 智慧崛起」`
+      );
+    }
+
+    function copyCommunityPrompt() {
+      const statusEl = document.getElementById('community-copy-status');
+      const text = COMMUNITY_TOPICS[appState.communityTopic] || COMMUNITY_TOPICS.health;
+      copyTextWithFallback(
+        text,
+        statusEl,
+        `已複製共學交流範本，可直接貼到筆記或讀書會討論！`
+      );
+    }
+
+    function exportStudyNotes() {
+      const statusEl = document.getElementById('video-action-status');
+      const checkedLabels = [];
+      const mapTitles = {
+        'chk-1': `健康｜身體警訊熔斷`,
+        'chk-2': `健康｜中斷反覆焦慮搜尋`,
+        'chk-3': `財務｜事前寫下停損與進場規則`,
+        'chk-4': `財務｜穿透敘事查核財報地標`,
+        'chk-5': `關係｜不當場答應的冷卻條款`,
+        'chk-6': `生活｜每週保留浮空一公尺儀式`
+      };
+      Object.keys(appState.checklist).forEach(k => {
+        if (appState.checklist[k]) checkedLabels.push(`  [已勾選] ${mapTitles[k]}`);
+        else checkedLabels.push(`  [待建立] ${mapTitles[k]}`);
+      });
+
+      const content = [
+        `==================================================`,
+        `【MD50】避開死亡螺旋｜個人學習與熔斷協議筆記`,
+        `==================================================`,
+        ``,
+        `一、核心一句話：`,
+        `這條路是「事實」鋪的，還是「氣味（費洛蒙）」鋪的？`,
+        ``,
+        `二、四大破局工具：`,
+        `1. 浮空一公尺（每日 5–10 分鐘後設覺察）`,
+        `2. 允許一隻走神蟻（刻意接觸異質觀點與圈外夥伴）`,
+        `3. 預先寫好熔斷協議（在清醒時設好紅色按鈕）`,
+        `4. 樂觀思考・悲觀計畫・積極執行（稻盛和夫經營哲學）`,
+        ``,
+        `三、我的三劍客熔斷檢核狀態：`,
+        checkedLabels.join('\n'),
+        ``,
+        `四、記憶卡掌握進度：${appState.masteredIds.length} / ${FLASHCARDS_DATA.length}`,
+        `五、測驗已完成題數：${Object.keys(appState.quizAnswers).length} / ${QUIZ_DATA.length}`,
+        ``
+      ].join('\n');
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === 'function') {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: 'text/plain',
+          encoding: 'UTF-8',
+          filename: 'MD50_避開死亡螺旋學習筆記.txt'
+        });
+        if (statusEl) statusEl.textContent = `已匯出「MD50_避開死亡螺旋學習筆記.txt」`;
+      } else {
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'MD50_避開死亡螺旋學習筆記.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        if (statusEl) statusEl.textContent = `已下載學習筆記檔案。`;
+      }
+    }
+
+    /* ================================================================
+       INITIALIZATION
+       ================================================================ */
+    async function initApp() {
+      await loadPersistedState();
+
+      // Sync simulator sliders from restored state
+      const sSlider = document.getElementById('slider-scent');
+      const bSlider = document.getElementById('slider-breaker');
+      if (sSlider) sSlider.value = appState.simScent;
+      if (bSlider) bSlider.value = appState.simBreaker;
+
+      // Sync mode buttons
+      const modeBtns = {
+        closed: document.getElementById('btn-mode-closed'),
+        matrix: document.getElementById('btn-mode-matrix'),
+        break: document.getElementById('btn-mode-break')
+      };
+      Object.keys(modeBtns).forEach(k => {
+        if (modeBtns[k]) modeBtns[k].classList.toggle('active', k === appState.infographicMode);
+      });
+
+      // Sync filter chips for flashcards
+      const fcFilterBtns = document.querySelectorAll('#sec-flashcards .filter-chip');
+      const filterMap = [`all`, `mechanism`, `finance`, `health`, `mind`];
+      fcFilterBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', filterMap[idx] === appState.flashcardFilter);
+      });
+
+      // Sync community topic chips
+      const comBtns = document.querySelectorAll('#sec-community .filter-chip');
+      const comMap = [`health`, `finance`, `relation`];
+      comBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', comMap[idx] === appState.communityTopic);
+      });
+
+      // Render all views
+      updateSpiralSimulator();
+      renderChecklist();
+      renderFlashcard();
+      renderQuiz();
+      renderCommunityTemplate();
+      updateGlobalProgress();
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
